@@ -45,9 +45,11 @@ export default function Navbar() {
                             />
                         ) : (
                             <>
-                                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                                    <span className="text-white font-bold text-xl">BE</span>
-                                </div>
+                                <img
+                                    src="/default-logo.png"
+                                    alt="Bengal Education Ventures"
+                                    className="h-10 w-auto object-contain"
+                                />
                                 <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">Bengal Education Ventures</span>
                             </>
                         )}

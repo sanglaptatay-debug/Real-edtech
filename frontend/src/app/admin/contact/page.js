@@ -254,14 +254,17 @@ export default function AdminSettingsPage() {
                                             </div>
                                         </div>
 
-                                        <div className="flex gap-4 pt-4">
+                                        <div className="flex flex-col gap-2 w-full">
                                             <button
                                                 type="submit"
                                                 disabled={saving}
-                                                className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
-                                                {saving ? 'Saving...' : 'Save Changes'}
+                                                {saving ? 'Saving & Publishing...' : 'Save & Publish to All Users'}
                                             </button>
+                                            <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+                                                Changes submitted here will be visible to all users immediately.
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
