@@ -16,7 +16,10 @@ const galleryRoutes = require('./routes/gallery');
 const app = express();
 
 // Connect to MongoDB
-connectDB();
+// Connect to MongoDB
+connectDB().then(() => {
+    require('./utils/seedServices')();
+});
 
 // Middleware
 app.use(cors());
