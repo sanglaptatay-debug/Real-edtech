@@ -1,20 +1,32 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CourseTile from '../components/CourseTile';
 import CourseModal from '../components/CourseModal';
 import { coursesAPI } from '../utils/api';
+import { isAuthenticated } from '../utils/auth';
 
 export default function Home() {
+    const router = useRouter();
     const [courses, setCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isAuthChecking, setIsAuthChecking] = useState(true);
 
     useEffect(() => {
-        fetchCourses();
-    }, []);
+        const checkAuth = () => {
+            if (!isAuthenticated()) {
+                router.push('/login');
+            } else {
+                setIsAuthChecking(false);
+                fetchCourses();
+            }
+        };
+        checkAuth();
+    }, [router]);
 
     const fetchCourses = async () => {
         try {
@@ -31,6 +43,14 @@ export default function Home() {
         setSelectedCourse(course);
         setModalOpen(true);
     };
+
+    if (isAuthChecking) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent"></div>
+            </div>
+        );
+    }
 
     return (
         <>
