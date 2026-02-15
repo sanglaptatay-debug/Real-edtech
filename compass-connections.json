@@ -1,0 +1,27 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "7f492431-c6ce-4031-90a6-e8481541a428",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1771004304795"
+        }
+      },
+      "favorite": {
+        "name": "Sanglap",
+        "color": "color1"
+      },
+      "savedConnectionType": "recent",
+      "connectionOptions": {
+        "connectionString": "mongodb+srv://sanglaptatay_db_user:wdWrwMUIgM7wtUNI@cluster1.jjorwmz.mongodb.net/?appName=Cluster1",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjoxLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}
