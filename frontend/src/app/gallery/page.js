@@ -283,7 +283,7 @@ export default function GalleryPage() {
 
                                         {/* Admin Actions */}
                                         {isAdminUser && (
-                                            <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                                            <div className="absolute top-2 right-2 flex gap-2 z-10">
                                                 <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
