@@ -7,24 +7,10 @@ const multer = require('multer');
 const path = require('path');
 
 // Configure Multer for Logo Upload
-const fs = require('fs');
+// Configure Multer for Logo Upload (Memory Storage)
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configure Multer for Logo Upload
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, 'logo-' + uniqueSuffix + path.extname(file.originalname));
-    }
-});
+// Configure Multer for Logo Upload (Memory Storage)
+const storage = multer.memoryStorage();
 
 const upload = multer({
     storage: storage,
@@ -59,18 +45,11 @@ router.put('/', auth, roleCheck('Admin'), upload.single('logo'), async (req, res
 
         // Update Logo if uploaded - Store as Base64 in DB
         if (req.file) {
-            // Read file from disk
-            const imgPath = req.file.path;
-            const imgData = fs.readFileSync(imgPath);
-
-            // Create Base64 string
-            const base64Image = `data:${req.file.mimetype};base64,${imgData.toString('base64')}`;
+            // Create Base64 string from memory buffer
+            const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
 
             // Store in DB
             settings.logoUrl = base64Image;
-
-            // Clean up: delete temp file
-            fs.unlinkSync(imgPath);
         }
 
         // Update Contact Info & Dark Mode
