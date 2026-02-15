@@ -4,6 +4,22 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Student = require('../models/Student');
 
+// Helper function for password validation
+const validatePassword = (password) => {
+    const minLength = 8;
+    const minNumbers = 3;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const numberCount = (password.match(/\d/g) || []).length;
+
+    if (password.length < minLength) return 'Password must be at least 8 characters long';
+    if (!hasUpperCase) return 'Password must contain at least one uppercase letter';
+    if (!hasSpecialChar) return 'Password must contain at least one special character';
+    if (numberCount < minNumbers) return 'Password must contain at least 3 numbers';
+
+    return null;
+};
+
 // Register new student
 router.post('/register', async (req, res) => {
     console.log('📝 Registration request received:', req.body);
@@ -13,6 +29,11 @@ router.post('/register', async (req, res) => {
         // Validate input
         if (!fullName || !email || !password) {
             return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+            return res.status(400).json({ error: passwordError });
         }
 
         // Check if student already exists

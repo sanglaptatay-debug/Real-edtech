@@ -58,8 +58,27 @@ export default function ManageAdmins() {
             return;
         }
 
-        if (formData.password.length < 6) {
-            setError('Password must be at least 6 characters');
+        // Password validation policy
+        const minLength = 8;
+        const minNumbers = 3;
+        const hasUpperCase = /[A-Z]/.test(formData.password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.password);
+        const numberCount = (formData.password.match(/\d/g) || []).length;
+
+        if (formData.password.length < minLength) {
+            setError('Password must be at least 8 characters long');
+            return;
+        }
+        if (!hasUpperCase) {
+            setError('Password must contain at least one uppercase letter');
+            return;
+        }
+        if (!hasSpecialChar) {
+            setError('Password must contain at least one special character');
+            return;
+        }
+        if (numberCount < minNumbers) {
+            setError('Password must contain at least 3 numbers');
             return;
         }
 
@@ -117,8 +136,27 @@ export default function ManageAdmins() {
 
     const handlePasswordReset = async (e) => {
         e.preventDefault();
-        if (newPassword.length < 6) {
-            setError('Password must be at least 6 characters');
+        // Password validation policy
+        const minLength = 8;
+        const minNumbers = 3;
+        const hasUpperCase = /[A-Z]/.test(newPassword);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
+        const numberCount = (newPassword.match(/\d/g) || []).length;
+
+        if (newPassword.length < minLength) {
+            setError('Password must be at least 8 characters long');
+            return;
+        }
+        if (!hasUpperCase) {
+            setError('Password must contain at least one uppercase letter');
+            return;
+        }
+        if (!hasSpecialChar) {
+            setError('Password must contain at least one special character');
+            return;
+        }
+        if (numberCount < minNumbers) {
+            setError('Password must contain at least 3 numbers');
             return;
         }
 
