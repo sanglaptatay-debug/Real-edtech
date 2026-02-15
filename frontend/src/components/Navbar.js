@@ -39,7 +39,7 @@ export default function Navbar() {
                     <Link href="/" className="flex items-center space-x-2">
                         {logoUrl ? (
                             <img
-                                src={`${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${logoUrl}`}
+                                src={logoUrl.startsWith('data:') ? logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${logoUrl}`}
                                 alt="Logo"
                                 className="h-10 w-auto object-contain"
                             />

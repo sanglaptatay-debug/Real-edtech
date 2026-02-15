@@ -57,9 +57,20 @@ router.put('/', auth, roleCheck('Admin'), upload.single('logo'), async (req, res
     try {
         let settings = await SiteSettings.getSettings();
 
-        // Update Logo if uploaded
+        // Update Logo if uploaded - Store as Base64 in DB
         if (req.file) {
-            settings.logoUrl = '/uploads/' + req.file.filename;
+            // Read file from disk
+            const imgPath = req.file.path;
+            const imgData = fs.readFileSync(imgPath);
+
+            // Create Base64 string
+            const base64Image = `data:${req.file.mimetype};base64,${imgData.toString('base64')}`;
+
+            // Store in DB
+            settings.logoUrl = base64Image;
+
+            // Clean up: delete temp file
+            fs.unlinkSync(imgPath);
         }
 
         // Update Contact Info & Dark Mode

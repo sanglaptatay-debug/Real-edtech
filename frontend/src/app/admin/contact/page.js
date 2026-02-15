@@ -49,7 +49,7 @@ export default function AdminSettingsPage() {
                     darkModeEnabled: data.darkModeEnabled
                 });
                 if (data.logoUrl) {
-                    setLogoPreview(`${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${data.logoUrl}`);
+                    setLogoPreview(data.logoUrl.startsWith('data:') ? data.logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${data.logoUrl}`);
                 }
             }
         } catch (error) {

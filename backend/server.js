@@ -46,78 +46,8 @@ app.use('/api/settings', require('./routes/settings'));
 
 // Contact Information is now handled via /api/settings
 
-// Project videos (simple in-memory storage for now)
-let projectVideos = [
-    {
-        id: 1,
-        title: 'AI Robot Demo',
-        description: 'Student-built AI-powered robot',
-        embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-    },
-    {
-        id: 2,
-        title: 'Drone Flight Show',
-        description: 'Autonomous drone navigation project',
-        embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-    },
-    {
-        id: 3,
-        title: '3D Printed Models',
-        description: 'Student 3D printing showcase',
-        embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
-    }
-];
-let nextVideoId = 4;
-
-app.get('/api/project-videos', (req, res) => {
-    res.json(projectVideos);
-});
-
-app.post('/api/project-videos', (req, res) => {
-    const newVideo = {
-        id: nextVideoId++,
-        title: req.body.title,
-        description: req.body.description,
-        embedUrl: req.body.embedUrl
-    };
-    projectVideos.push(newVideo);
-    res.json({
-        message: 'Video added successfully',
-        video: newVideo
-    });
-});
-
-app.put('/api/project-videos/:id', (req, res) => {
-    const videoId = parseInt(req.params.id);
-    const index = projectVideos.findIndex(v => v.id === videoId);
-
-    if (index === -1) {
-        return res.status(404).json({ message: 'Video not found' });
-    }
-
-    projectVideos[index] = {
-        ...projectVideos[index],
-        ...req.body,
-        id: videoId
-    };
-
-    res.json({
-        message: 'Video updated successfully',
-        video: projectVideos[index]
-    });
-});
-
-app.delete('/api/project-videos/:id', (req, res) => {
-    const videoId = parseInt(req.params.id);
-    const index = projectVideos.findIndex(v => v.id === videoId);
-
-    if (index === -1) {
-        return res.status(404).json({ message: 'Video not found' });
-    }
-
-    projectVideos.splice(index, 1);
-    res.json({ message: 'Video deleted successfully' });
-});
+// Project videos routes
+app.use('/api/project-videos', require('./routes/projectVideos'));
 
 // Root route
 app.get('/', (req, res) => {

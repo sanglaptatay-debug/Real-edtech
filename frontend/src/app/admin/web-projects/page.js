@@ -117,7 +117,7 @@ export default function AdminWebProjectsPage() {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen bg-gray-50">
+            <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 {/* Header */}
                 <section className="gradient-bg text-white py-12 px-4">
                     <div className="max-w-6xl mx-auto">
@@ -137,7 +137,7 @@ export default function AdminWebProjectsPage() {
                             <>
                                 {/* Add/Edit Form */}
                                 <div className="card mb-8">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                                         {editingId ? 'Edit Project' : 'Add New Project'}
                                     </h2>
 
@@ -152,7 +152,7 @@ export default function AdminWebProjectsPage() {
 
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Project Title *
                                             </label>
                                             <input
@@ -166,7 +166,7 @@ export default function AdminWebProjectsPage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Description *
                                             </label>
                                             <input
@@ -181,7 +181,7 @@ export default function AdminWebProjectsPage() {
 
                                         {/* Dynamic Links */}
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Project Links
                                             </label>
                                             <div className="space-y-3">
@@ -244,7 +244,7 @@ export default function AdminWebProjectsPage() {
                                                 <button
                                                     type="button"
                                                     onClick={cancelEdit}
-                                                    className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                                    className="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                                 >
                                                     Cancel
                                                 </button>
@@ -255,7 +255,7 @@ export default function AdminWebProjectsPage() {
 
                                 {/* Projects List */}
                                 <div>
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Current Web Projects ({projects.length})</h2>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Current Web Projects ({projects.length})</h2>
 
                                     {projects.length === 0 ? (
                                         <div className="card text-center py-12">
@@ -271,9 +271,9 @@ export default function AdminWebProjectsPage() {
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                                             </svg>
                                                         </div>
-                                                        <h3 className="text-xl font-bold text-gray-900 truncate">{project.title}</h3>
+                                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white truncate">{project.title}</h3>
                                                     </div>
-                                                    <p className="text-gray-600 mb-4 h-12 overflow-hidden">{project.description}</p>
+                                                    <p className="text-gray-600 dark:text-gray-300 mb-4 h-12 overflow-hidden">{project.description}</p>
 
                                                     <div className="flex flex-wrap gap-2 mb-4">
                                                         {project.links.map((link, i) => (
@@ -301,9 +301,9 @@ export default function AdminWebProjectsPage() {
                                                     {/* Delete Confirmation Modal */}
                                                     {showDeleteConfirm === project._id && (
                                                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                                            <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-                                                                <h3 className="text-xl font-bold text-gray-900 mb-4">Confirm Delete</h3>
-                                                                <p className="text-gray-600 mb-6">
+                                                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4">
+                                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Confirm Delete</h3>
+                                                                <p className="text-gray-600 dark:text-gray-300 mb-6">
                                                                     Are you sure you want to delete "{project.title}"? This action cannot be undone.
                                                                 </p>
                                                                 <div className="flex gap-4">
@@ -315,7 +315,7 @@ export default function AdminWebProjectsPage() {
                                                                     </button>
                                                                     <button
                                                                         onClick={() => setShowDeleteConfirm(null)}
-                                                                        className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                                                        className="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                                                     >
                                                                         Cancel
                                                                     </button>

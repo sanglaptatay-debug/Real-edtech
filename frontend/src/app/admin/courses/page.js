@@ -210,14 +210,14 @@ export default function AdminCoursesPage() {
             {/* Create/Edit Modal */}
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
                         <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-2xl font-bold text-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 {editingCourse ? 'Edit Course' : 'Create New Course'}
                             </h3>
                             <button
                                 onClick={closeModal}
-                                className="text-gray-400 hover:text-gray-600"
+                                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -227,7 +227,7 @@ export default function AdminCoursesPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Course Title *
                                 </label>
                                 <input
@@ -241,7 +241,7 @@ export default function AdminCoursesPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Category *
                                 </label>
                                 <select
@@ -257,7 +257,7 @@ export default function AdminCoursesPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Summary/Description *
                                 </label>
                                 <textarea
@@ -270,27 +270,27 @@ export default function AdminCoursesPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Course Image
                                 </label>
                                 <input
                                     type="file"
                                     onChange={handleFileChange}
                                     accept="image/*"
-                                    className="block w-full text-sm text-gray-500
+                                    className="block w-full text-sm text-gray-500 dark:text-gray-400
                                         file:mr-4 file:py-2 file:px-4
                                         file:rounded-full file:border-0
                                         file:text-sm file:font-semibold
                                         file:bg-blue-50 file:text-blue-700
-                                        hover:file:bg-blue-100"
+                                        hover:file:bg-blue-100 dark:file:bg-gray-700 dark:file:text-gray-300"
                                 />
                                 {editingCourse && editingCourse.image && !imageFile && (
-                                    <p className="mt-1 text-xs text-gray-500">Current image: {editingCourse.image.split('/').pop()}</p>
+                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Current image: {editingCourse.image.split('/').pop()}</p>
                                 )}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Google Form Link (Registration)
                                 </label>
                                 <input
@@ -306,7 +306,7 @@ export default function AdminCoursesPage() {
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                    className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                                 >
                                     Cancel
                                 </button>

@@ -66,7 +66,7 @@ export default function AdminVideosPage() {
     };
 
     const handleEdit = (video) => {
-        setEditingId(video.id);
+        setEditingId(video._id);
         setFormData({
             title: video.title,
             description: video.description,
@@ -115,14 +115,14 @@ export default function AdminVideosPage() {
                             <>
                                 {/* Add/Edit Form */}
                                 <div className="card mb-8">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                                         {editingId ? 'Edit Video' : 'Add New Video'}
                                     </h2>
 
                                     {message && (
                                         <div className={`mb-6 p-4 rounded-lg ${message.includes('Error')
-                                            ? 'bg-red-100 text-red-700'
-                                            : 'bg-green-100 text-green-700'
+                                            ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200'
+                                            : 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200'
                                             }`}>
                                             {message}
                                         </div>
@@ -130,7 +130,7 @@ export default function AdminVideosPage() {
 
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Video Title *
                                             </label>
                                             <input
@@ -144,7 +144,7 @@ export default function AdminVideosPage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 Description *
                                             </label>
                                             <input
@@ -158,7 +158,7 @@ export default function AdminVideosPage() {
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 YouTube Embed URL *
                                             </label>
                                             <input
@@ -196,16 +196,16 @@ export default function AdminVideosPage() {
                                                 className="input-field"
                                                 required
                                             />
-                                            <p className="mt-1 text-sm text-gray-500">
+                                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                                 Supports standard YouTube URLs, short links, or direct Embed Code
                                             </p>
                                         </div>
 
                                         {/* Preview */}
                                         {formData.embedUrl && (
-                                            <div className="border-t border-gray-200 pt-6">
-                                                <h3 className="text-lg font-bold text-gray-900 mb-4">Preview</h3>
-                                                <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                                            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Preview</h3>
+                                                <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
                                                     <iframe
                                                         className="w-full h-full"
                                                         src={formData.embedUrl}
@@ -229,7 +229,7 @@ export default function AdminVideosPage() {
                                                 <button
                                                     type="button"
                                                     onClick={cancelEdit}
-                                                    className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                                    className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                                                 >
                                                     Cancel
                                                 </button>
@@ -240,17 +240,17 @@ export default function AdminVideosPage() {
 
                                 {/* Videos List */}
                                 <div>
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Current Videos ({videos.length})</h2>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Current Videos ({videos.length})</h2>
 
                                     {videos.length === 0 ? (
                                         <div className="card text-center py-12">
-                                            <p className="text-gray-500">No videos yet. Add your first video above!</p>
+                                            <p className="text-gray-500 dark:text-gray-400">No videos yet. Add your first video above!</p>
                                         </div>
                                     ) : (
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {videos.map((video) => (
-                                                <div key={video.id} className="card">
-                                                    <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
+                                                <div key={video._id} className="card">
+                                                    <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 overflow-hidden">
                                                         <iframe
                                                             className="w-full h-full"
                                                             src={video.embedUrl}
@@ -259,8 +259,8 @@ export default function AdminVideosPage() {
                                                             allowFullScreen
                                                         ></iframe>
                                                     </div>
-                                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{video.title}</h3>
-                                                    <p className="text-gray-600 mb-4">{video.description}</p>
+                                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{video.title}</h3>
+                                                    <p className="text-gray-600 dark:text-gray-300 mb-4">{video.description}</p>
 
                                                     <div className="flex gap-2">
                                                         <button
@@ -270,7 +270,7 @@ export default function AdminVideosPage() {
                                                             Edit
                                                         </button>
                                                         <button
-                                                            onClick={() => setShowDeleteConfirm(video.id)}
+                                                            onClick={() => setShowDeleteConfirm(video._id)}
                                                             className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                                                         >
                                                             Delete
@@ -278,23 +278,23 @@ export default function AdminVideosPage() {
                                                     </div>
 
                                                     {/* Delete Confirmation Modal */}
-                                                    {showDeleteConfirm === video.id && (
+                                                    {showDeleteConfirm === video._id && (
                                                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                                                            <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-                                                                <h3 className="text-xl font-bold text-gray-900 mb-4">Confirm Delete</h3>
-                                                                <p className="text-gray-600 mb-6">
+                                                            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4">
+                                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Confirm Delete</h3>
+                                                                <p className="text-gray-600 dark:text-gray-300 mb-6">
                                                                     Are you sure you want to delete "{video.title}"? This action cannot be undone.
                                                                 </p>
                                                                 <div className="flex gap-4">
                                                                     <button
-                                                                        onClick={() => handleDelete(video.id)}
+                                                                        onClick={() => handleDelete(video._id)}
                                                                         className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                                                                     >
                                                                         Delete
                                                                     </button>
                                                                     <button
                                                                         onClick={() => setShowDeleteConfirm(null)}
-                                                                        className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                                                        className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
                                                                     >
                                                                         Cancel
                                                                     </button>

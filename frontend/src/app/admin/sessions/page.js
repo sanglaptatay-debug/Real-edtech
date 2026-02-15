@@ -108,7 +108,7 @@ export default function AdminSessionsPage() {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen bg-gray-50">
+            <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
                 {/* Header */}
                 <section className="gradient-bg text-white py-12 px-4">
                     <div className="max-w-7xl mx-auto">
@@ -121,7 +121,7 @@ export default function AdminSessionsPage() {
                 <section className="py-12 px-4">
                     <div className="max-w-7xl mx-auto">
                         <div className="flex justify-between items-center mb-8">
-                            <h2 className="text-2xl font-bold text-gray-900">All Sessions</h2>
+                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">All Sessions</h2>
                             <button
                                 onClick={openCreateModal}
                                 className="btn-primary"
@@ -140,13 +140,13 @@ export default function AdminSessionsPage() {
                                     <div key={session._id} className="card">
                                         <div className="flex justify-between items-start">
                                             <div className="flex-1">
-                                                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                                                     {session.sessionTitle}
                                                 </h3>
-                                                <p className="text-gray-600 mb-2">
+                                                <p className="text-gray-600 dark:text-gray-400 mb-2">
                                                     Course: {getCourseTitle(session.courseId)}
                                                 </p>
-                                                <p className="text-gray-700 font-medium mb-2">
+                                                <p className="text-gray-700 dark:text-gray-300 font-medium mb-2">
                                                     📅 {new Date(session.scheduledTime).toLocaleString('en-US', {
                                                         weekday: 'long',
                                                         year: 'numeric',
@@ -161,7 +161,7 @@ export default function AdminSessionsPage() {
                                                         href={session.gmeetLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-primary-600 hover:text-primary-700 text-sm"
+                                                        className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm"
                                                     >
                                                         🔗 Google Meet Link
                                                     </a>
@@ -203,9 +203,9 @@ export default function AdminSessionsPage() {
             {/* Create/Edit Modal */}
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl max-w-2xl w-full p-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full p-6">
                         <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-2xl font-bold text-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 {editingSession ? 'Edit Session' : 'Create New Session'}
                             </h3>
                             <button
@@ -220,7 +220,7 @@ export default function AdminSessionsPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Session Title *
                                 </label>
                                 <input
@@ -234,7 +234,7 @@ export default function AdminSessionsPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Course *
                                 </label>
                                 <select
@@ -252,7 +252,7 @@ export default function AdminSessionsPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Date & Time *
                                 </label>
                                 <input
@@ -265,7 +265,7 @@ export default function AdminSessionsPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Google Meet Link
                                 </label>
                                 <input
@@ -281,7 +281,7 @@ export default function AdminSessionsPage() {
                                 <button
                                     type="button"
                                     onClick={closeModal}
-                                    className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                    className="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                 >
                                     Cancel
                                 </button>
