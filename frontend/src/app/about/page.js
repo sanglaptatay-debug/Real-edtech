@@ -1,10 +1,26 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useTheme } from '../../context/ThemeContext';
+import { servicesAPI } from '../../utils/api';
 
 export default function AboutPage() {
     const { fullSettings } = useTheme();
+    const [services, setServices] = useState([]);
+
+    useEffect(() => {
+        fetchServices();
+    }, []);
+
+    const fetchServices = async () => {
+        try {
+            const response = await servicesAPI.getAll();
+            setServices(response.data);
+        } catch (error) {
+            console.error('Error fetching services:', error);
+        }
+    };
 
     return (
         <>
@@ -61,18 +77,29 @@ export default function AboutPage() {
                     <div className="max-w-4xl mx-auto">
                         <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">What We Offer</h2>
                         <div className="space-y-6">
-                            <div className="bg-white rounded-xl p-6 shadow-md">
-                                <h3 className="text-xl font-bold text-primary-600 mb-2">AI & Machine Learning</h3>
-                                <p className="text-gray-700">Discover the power of artificial intelligence and learn to build intelligent systems</p>
-                            </div>
-                            <div className="bg-white rounded-xl p-6 shadow-md">
-                                <h3 className="text-xl font-bold text-green-600 mb-2">Drone Technology</h3>
-                                <p className="text-gray-700">Master drone operations, programming, and real-world applications</p>
-                            </div>
-                            <div className="bg-white rounded-xl p-6 shadow-md">
-                                <h3 className="text-xl font-bold text-purple-600 mb-2">3D Printing</h3>
-                                <p className="text-gray-700">Learn additive manufacturing, design, and prototyping techniques</p>
-                            </div>
+                            {services.length > 0 ? (
+                                services.map((service) => (
+                                    <div key={service._id} className="bg-white rounded-xl p-6 shadow-md border-l-4" style={{ borderLeftColor: service.color === 'blue' ? '#3B82F6' : service.color === 'green' ? '#10B981' : service.color === 'purple' ? '#8B5CF6' : service.color === 'red' ? '#EF4444' : service.color === 'yellow' ? '#F59E0B' : '#6366F1' }}>
+                                        <h3 className={`text-xl font-bold mb-2`} style={{ color: service.color === 'blue' ? '#2563EB' : service.color === 'green' ? '#059669' : service.color === 'purple' ? '#7C3AED' : service.color === 'red' ? '#DC2626' : service.color === 'yellow' ? '#D97706' : '#4F46E5' }}>{service.title}</h3>
+                                        <p className="text-gray-700">{service.description}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <>
+                                    <div className="bg-white rounded-xl p-6 shadow-md">
+                                        <h3 className="text-xl font-bold text-primary-600 mb-2">AI & Machine Learning</h3>
+                                        <p className="text-gray-700">Discover the power of artificial intelligence and learn to build intelligent systems</p>
+                                    </div>
+                                    <div className="bg-white rounded-xl p-6 shadow-md">
+                                        <h3 className="text-xl font-bold text-green-600 mb-2">Drone Technology</h3>
+                                        <p className="text-gray-700">Master drone operations, programming, and real-world applications</p>
+                                    </div>
+                                    <div className="bg-white rounded-xl p-6 shadow-md">
+                                        <h3 className="text-xl font-bold text-purple-600 mb-2">3D Printing</h3>
+                                        <p className="text-gray-700">Learn additive manufacturing, design, and prototyping techniques</p>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </section>

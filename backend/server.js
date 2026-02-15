@@ -42,6 +42,7 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/students', require('./routes/students'));
 app.use('/api/web-projects', require('./routes/webProjects'));
+app.use('/api/services', require('./routes/services'));
 
 app.use('/api/settings', require('./routes/settings'));
 
