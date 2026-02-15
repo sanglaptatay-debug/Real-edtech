@@ -26,6 +26,7 @@ export default function AdminSettingsPage() {
         youtubeLink: '',
         aboutSubtitle: '',
         visionText: '',
+        missionCards: [],
         darkModeEnabled: true
     });
 
@@ -99,7 +100,8 @@ export default function AdminSettingsPage() {
             // Append Page Content as JSON string
             const siteContent = {
                 aboutSubtitle: formData.aboutSubtitle,
-                visionText: formData.visionText
+                visionText: formData.visionText,
+                missionCards: formData.missionCards
             };
             data.append('siteContent', JSON.stringify(siteContent));
 

@@ -19,7 +19,12 @@ const SiteSettingsSchema = new mongoose.Schema({
     },
     siteContent: {
         aboutSubtitle: { type: String, default: 'We are empowering the youth of Bengal' },
-        visionText: { type: String, default: 'We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations.' }
+        visionText: { type: String, default: 'We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations.' },
+        missionCards: [{
+            title: { type: String },
+            description: { type: String },
+            icon: { type: String }
+        }]
     },
     updatedAt: {
         type: Date,
