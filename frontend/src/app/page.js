@@ -86,7 +86,7 @@ export default function Home() {
                         <div className="text-center mb-12">
                             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Courses</h2>
                             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                                Choose from our cutting-edge courses designed for the future of technology
+                                Choose from our cutting edge courses designed for the future of technology
                             </p>
                         </div>
 
@@ -109,8 +109,6 @@ export default function Home() {
                             <div className="text-center py-12">
                                 <p className="text-gray-600 dark:text-gray-400 text-lg">No courses available at the moment.</p>
                                 <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Check back soon for exciting new courses!</p>
-                                {/* Debug info - remove in production if not needed */}
-                                <p className="text-xs text-gray-400 mt-4">Debug: Courses fetched: {courses ? courses.length : 'undefined'}</p>
                             </div>
                         )}
                     </div>
