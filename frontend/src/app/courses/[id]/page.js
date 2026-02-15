@@ -87,14 +87,36 @@ export default function CourseDetailsPage() {
             <Navbar />
             <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                 {/* Course Header */}
-                <section className="gradient-bg text-white py-16 px-4">
-                    <div className="max-w-4xl mx-auto">
-                        <span className="inline-block bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                            {course.category}
-                        </span>
-                        <h1 className="text-5xl font-bold mb-4">{course.title}</h1>
-                        <p className="text-xl text-blue-100">{course.summary}</p>
-                    </div>
+                <section className="relative">
+                    {course.image ? (
+                        <div className="relative h-[400px] w-full">
+                            <img
+                                src={course.image.startsWith('http') || course.image.startsWith('data:') ? course.image : `http://localhost:5000${course.image}`}
+                                alt={course.title}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="max-w-4xl w-full px-4 text-center">
+                                    <span className="inline-block bg-primary-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg">
+                                        {course.category}
+                                    </span>
+                                    <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">{course.title}</h1>
+                                    <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed">{course.summary}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="gradient-bg text-white py-20 px-4">
+                            <div className="max-w-4xl mx-auto text-center">
+                                <span className="inline-block bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-semibold mb-4 backdrop-blur-sm">
+                                    {course.category}
+                                </span>
+                                <h1 className="text-5xl font-bold mb-4">{course.title}</h1>
+                                <p className="text-xl text-blue-100">{course.summary}</p>
+                            </div>
+                        </div>
+                    )}
                 </section>
 
                 <div className="max-w-4xl mx-auto px-4 py-12">
