@@ -1,7 +1,7 @@
 # Bengal Education Ventures - EdTech Platform
 *A Programme of BIOROBODRAI*
 
-A full-stack EdTech platform for live, cohort-based learning in AI, Drone Technology, and 3D Printing.
+A full-stack EdTech platform for live, cohort based learning in AI, Drone Technology, and 3D Printing.
 
 ## Tech Stack
 
