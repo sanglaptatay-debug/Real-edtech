@@ -352,8 +352,11 @@ export default function ManageAdmins() {
                                                         onChange={handleInputChange}
                                                         required
                                                         className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 border bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                                                        placeholder="Enter password (min 6 chars)"
+                                                        placeholder="Min 8 chars, 1 upper, 1 special, 3 numbers"
                                                     />
+                                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                                        Must contain 8+ chars, 1 uppercase, 1 special char, 3 numbers
+                                                    </p>
                                                 </div>
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
@@ -423,8 +426,11 @@ export default function ManageAdmins() {
                                             onChange={(e) => setNewPassword(e.target.value)}
                                             required
                                             className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 border bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                                            placeholder="Enter new password (min 6 chars)"
+                                            placeholder="Min 8 chars, 1 upper, 1 special, 3 numbers"
                                         />
+                                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                            Must contain 8+ chars, 1 uppercase, 1 special char, 3 numbers
+                                        </p>
                                     </div>
                                     <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                                         <button

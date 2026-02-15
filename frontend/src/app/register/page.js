@@ -121,8 +121,11 @@ export default function RegisterPage() {
                             className="input-field"
                             value={formData.password}
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            placeholder="••••••••"
+                            placeholder="Min 8 chars, 1 upper, 1 special, 3 numbers"
                         />
+                        <p className="mt-1 text-xs text-gray-500">
+                            Must contain 8+ chars, 1 uppercase, 1 special char, 3 numbers
+                        </p>
                     </div>
 
                     <div>
@@ -133,7 +136,7 @@ export default function RegisterPage() {
                             className="input-field"
                             value={formData.confirmPassword}
                             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                            placeholder="••••••••"
+                            placeholder="Confirm password"
                         />
                     </div>
 
