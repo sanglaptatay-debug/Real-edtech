@@ -15,6 +15,7 @@ export default function AdminSettingsPage() {
     const [message, setMessage] = useState('');
     const [logoPreview, setLogoPreview] = useState('');
     const [logoFile, setLogoFile] = useState(null);
+    const [removeLogo, setRemoveLogo] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -97,6 +98,8 @@ export default function AdminSettingsPage() {
             // Append Logo if selected
             if (logoFile) {
                 data.append('logo', logoFile);
+            } else if (removeLogo) {
+                data.append('removeLogo', 'true');
             }
 
             await settingsAPI.update(data);
@@ -155,19 +158,37 @@ export default function AdminSettingsPage() {
                                                     {logoPreview ? (
                                                         <img src={logoPreview} alt="Logo Preview" className="w-full h-full object-contain" />
                                                     ) : (
-                                                        <span className="text-gray-400 text-sm">No Logo</span>
+                                                        <div className="flex flex-col items-center justify-center text-center p-2">
+                                                            <span className="text-gray-400 text-sm font-semibold">Default Logo</span>
+                                                            <span className="text-gray-400 text-xs">(Will be used)</span>
+                                                        </div>
                                                     )}
                                                 </div>
                                                 <div className="flex-1">
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                         Upload New Logo
                                                     </label>
-                                                    <input
-                                                        type="file"
-                                                        accept="image/*"
-                                                        onChange={handleFileChange}
-                                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-gray-700 dark:file:text-gray-300"
-                                                    />
+                                                    <div className="flex gap-2 items-center mb-2">
+                                                        <input
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={handleFileChange}
+                                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-gray-700 dark:file:text-gray-300"
+                                                        />
+                                                        {logoPreview && !logoPreview.includes('default-logo.png') && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setLogoFile(null);
+                                                                    setLogoPreview('');
+                                                                    setRemoveLogo(true);
+                                                                }}
+                                                                className="text-red-500 hover:text-red-700 text-sm font-medium whitespace-nowrap"
+                                                            >
+                                                                Reset to Default
+                                                            </button>
+                                                        )}
+                                                    </div>
                                                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Recommended size: 200x200px. Formats: PNG, JPG, SVG. Max size: 5MB.</p>
                                                 </div>
                                             </div>

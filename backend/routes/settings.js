@@ -50,6 +50,9 @@ router.put('/', auth, roleCheck('Admin'), upload.single('logo'), async (req, res
 
             // Store in DB
             settings.logoUrl = base64Image;
+        } else if (req.body.removeLogo === 'true') {
+            // Remove Logo if requested
+            settings.logoUrl = '';
         }
 
         // Update Contact Info & Dark Mode
