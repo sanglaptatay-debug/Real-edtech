@@ -122,7 +122,7 @@ export default function Home() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Vision</h2>
-                            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-line">
                                 "{fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."}"
                             </p>
                             <a href="/about" className="btn-primary">

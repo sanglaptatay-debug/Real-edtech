@@ -24,7 +24,7 @@ export default function AboutPage() {
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 md:p-12 border-l-4 border-primary-600">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Our Vision</h2>
-                            <p className="text-2xl text-gray-800 leading-relaxed text-center font-medium">
+                            <p className="text-2xl text-gray-800 leading-relaxed text-center font-medium whitespace-pre-line">
                                 "{fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."}"
                             </p>
                         </div>
