@@ -137,11 +137,7 @@ export default function LoginPage() {
                     </p>
                 </div>
 
-                <div className="mt-6 text-center">
-                    <Link href="/" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors flex items-center justify-center gap-1">
-                        ← Back to home
-                    </Link>
-                </div>
+
             </div>
         </div>
     );
