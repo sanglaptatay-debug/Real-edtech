@@ -36,22 +36,27 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2">
-                        {logoUrl ? (
-                            <img
-                                src={logoUrl.startsWith('data:') ? logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${logoUrl}`}
-                                alt="Logo"
-                                className="h-10 w-auto object-contain"
-                            />
-                        ) : (
-                            <img
-                                src="/default-logo.jpg"
-                                alt="Bengal Education Ventures"
-                                className="h-10 w-auto object-contain"
-                            />
-                        )}
-                        <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">Bengal Education Ventures</span>
-                    </Link>
+                    {/* Logo */}
+                    <div className="flex items-center space-x-2">
+                        <Link href="/">
+                            {logoUrl ? (
+                                <img
+                                    src={logoUrl.startsWith('data:') ? logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${logoUrl}`}
+                                    alt="Logo"
+                                    className="h-10 w-auto object-contain cursor-pointer"
+                                />
+                            ) : (
+                                <img
+                                    src="/default-logo.jpg"
+                                    alt="Bengal Education Ventures"
+                                    className="h-10 w-auto object-contain cursor-pointer"
+                                />
+                            )}
+                        </Link>
+                        <Link href="/">
+                            <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block cursor-pointer">Bengal Education Ventures</span>
+                        </Link>
+                    </div>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
