@@ -170,6 +170,32 @@ router.post('/register-admin', auth, admin, async (req, res) => {
     }
 });
 
+// Reset Admin Password (Protected: Admin only)
+router.put('/admins/:id/password', auth, admin, async (req, res) => {
+    try {
+        const { password } = req.body;
+
+        if (!password || password.length < 6) {
+            return res.status(400).json({ error: 'Password must be at least 6 characters' });
+        }
+
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update password (pre-save hook will hash it)
+        user.passwordHash = password;
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 // Delete Admin (Protected: Admin only)
 router.delete('/admins/:id', auth, admin, async (req, res) => {
     try {

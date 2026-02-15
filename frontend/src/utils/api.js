@@ -28,6 +28,7 @@ export const authAPI = {
     // Admin management
     getAdmins: () => api.get('/auth/admins'),
     registerAdmin: (data) => api.post('/auth/register-admin', data),
+    resetAdminPassword: (id, password) => api.put(`/auth/admins/${id}/password`, { password }),
     deleteAdmin: (id) => api.delete(`/auth/admins/${id}`),
 };
 

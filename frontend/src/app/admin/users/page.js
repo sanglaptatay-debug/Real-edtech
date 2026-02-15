@@ -102,6 +102,39 @@ export default function ManageAdmins() {
         }
     };
 
+    // Password Reset State
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+    const [selectedAdminId, setSelectedAdminId] = useState(null);
+    const [newPassword, setNewPassword] = useState('');
+    const [passwordLoading, setPasswordLoading] = useState(false);
+
+    const openPasswordModal = (adminId) => {
+        setSelectedAdminId(adminId);
+        setNewPassword('');
+        setIsPasswordModalOpen(true);
+        setError('');
+    };
+
+    const handlePasswordReset = async (e) => {
+        e.preventDefault();
+        if (newPassword.length < 6) {
+            setError('Password must be at least 6 characters');
+            return;
+        }
+
+        try {
+            setPasswordLoading(true);
+            await authAPI.resetAdminPassword(selectedAdminId, newPassword);
+            alert('Password updated successfully');
+            setIsPasswordModalOpen(false);
+        } catch (err) {
+            console.error('Error resetting password:', err);
+            setError(err.response?.data?.error || 'Failed to reset password');
+        } finally {
+            setPasswordLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
             <Navbar />
@@ -187,15 +220,31 @@ export default function ManageAdmins() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             {currentUser && currentUser.id !== admin._id && (
-                                                <button
-                                                    onClick={() => handleDelete(admin._id)}
-                                                    className="text-red-600 hover:text-red-900"
-                                                >
-                                                    Delete
-                                                </button>
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() => openPasswordModal(admin._id)}
+                                                        className="text-blue-600 hover:text-blue-900"
+                                                    >
+                                                        Change Password
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(admin._id)}
+                                                        className="text-red-600 hover:text-red-900"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             )}
                                             {currentUser && currentUser.id === admin._id && (
-                                                <span className="text-gray-400 italic">Current User</span>
+                                                <div className="flex justify-end gap-2 items-center">
+                                                    <span className="text-gray-400 italic mr-2">Current User</span>
+                                                    <button
+                                                        onClick={() => openPasswordModal(admin._id)}
+                                                        className="text-blue-600 hover:text-blue-900 font-medium"
+                                                    >
+                                                        Change Password
+                                                    </button>
+                                                </div>
                                             )}
                                         </td>
                                     </tr>
