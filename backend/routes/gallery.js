@@ -6,18 +6,9 @@ const SeminarGallery = require('../models/SeminarGallery');
 const auth = require('../middleware/auth');
 const roleCheck = require('../middleware/roleCheck');
 
-// Configure Multer storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, 'seminar-' + uniqueSuffix + path.extname(file.originalname));
-    }
-});
+// Configure Multer storage (Memory storage for Base64)
+const storage = multer.memoryStorage();
 
-// File filter to accept only images
 const fileFilter = (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|webp|gif/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -59,8 +50,11 @@ router.post('/upload', auth, roleCheck('Admin'), upload.single('image'), async (
 
         const { caption } = req.body;
 
+        // Convert buffer to Base64
+        const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+
         const galleryItem = new SeminarGallery({
-            imageUrl: '/uploads/' + req.file.filename,
+            imageUrl: base64Image,
             caption: caption || '',
             uploadedBy: req.user.userId
         });
@@ -91,8 +85,8 @@ router.put('/:id', auth, roleCheck('Admin'), upload.single('image'), async (req,
 
         // If a new file is uploaded, update imageUrl
         if (req.file) {
-            // Optional: Delete old file here (implementation depends on storage needs)
-            galleryItem.imageUrl = '/uploads/' + req.file.filename;
+            const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+            galleryItem.imageUrl = base64Image;
         }
 
         // Update caption if provided

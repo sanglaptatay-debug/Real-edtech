@@ -8,16 +8,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Configure Multer storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, 'course-' + uniqueSuffix + path.extname(file.originalname));
-    }
-});
+// Configure Multer storage (Memory storage for Base64)
+const storage = multer.memoryStorage();
 
 const upload = multer({
     storage: storage,
@@ -84,7 +76,8 @@ router.post('/', auth, roleCheck('Admin'), upload.single('image'), async (req, r
         };
 
         if (req.file) {
-            courseData.image = '/uploads/' + req.file.filename;
+            const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+            courseData.image = base64Image;
         }
 
         const course = new Course(courseData);
@@ -115,7 +108,8 @@ router.put('/:id', auth, roleCheck('Admin'), upload.single('image'), async (req,
         if (googleFormLink !== undefined) updateData.googleFormLink = googleFormLink;
 
         if (req.file) {
-            updateData.image = '/uploads/' + req.file.filename;
+            const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+            updateData.image = base64Image;
         }
 
         const course = await Course.findByIdAndUpdate(
