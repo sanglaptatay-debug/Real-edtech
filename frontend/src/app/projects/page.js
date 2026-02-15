@@ -42,9 +42,9 @@ export default function ProjectsPage() {
                 </section>
 
                 {/* Video Gallery */}
-                <section className="py-16 px-4">
+                <section className="py-16 px-4 bg-white dark:bg-gray-900 transition-colors duration-300">
                     <div className="max-w-6xl mx-auto">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">Project Videos</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Project Videos</h2>
 
                         {loading ? (
                             <div className="text-center py-12">
@@ -52,13 +52,13 @@ export default function ProjectsPage() {
                             </div>
                         ) : projectVideos.length === 0 ? (
                             <div className="text-center py-12">
-                                <p className="text-gray-500 text-lg">No project videos available yet.</p>
+                                <p className="text-gray-500 dark:text-gray-400 text-lg">No project videos available yet.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {projectVideos.map((project, index) => (
-                                    <div key={index} className="card">
-                                        <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
+                                    <div key={index} className="card bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 transition-colors duration-300">
+                                        <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 overflow-hidden">
                                             <iframe
                                                 className="w-full h-full"
                                                 src={project.embedUrl}
@@ -67,8 +67,8 @@ export default function ProjectsPage() {
                                                 allowFullScreen
                                             ></iframe>
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                                        <p className="text-gray-600">{project.description}</p>
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
                                     </div>
                                 ))}
                             </div>
@@ -77,9 +77,9 @@ export default function ProjectsPage() {
                 </section>
 
                 {/* Website Projects */}
-                <section className="py-16 px-4 bg-gray-50">
+                <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                     <div className="max-w-6xl mx-auto">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">Web Projects</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">Web Projects</h2>
 
                         {loading ? (
                             <div className="text-center py-12">
@@ -87,30 +87,30 @@ export default function ProjectsPage() {
                             </div>
                         ) : webProjects.length === 0 ? (
                             <div className="text-center py-12">
-                                <p className="text-gray-500 text-lg">No web projects added yet.</p>
+                                <p className="text-gray-500 dark:text-gray-400 text-lg">No web projects added yet.</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {webProjects.map((project, index) => (
-                                    <div key={project._id || index} className="card hover:scale-105 transform transition-all duration-300 flex flex-col h-full">
+                                    <div key={project._id || index} className="card bg-white dark:bg-gray-800 hover:scale-105 transform transition-all duration-300 flex flex-col h-full shadow-md rounded-xl p-6">
                                         <div className="flex items-center space-x-3 mb-3">
                                             <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
                                                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                                 </svg>
                                             </div>
-                                            <h3 className="text-xl font-bold text-gray-900 line-clamp-1" title={project.title}>{project.title}</h3>
+                                            <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-1" title={project.title}>{project.title}</h3>
                                         </div>
-                                        <p className="text-gray-600 mb-4 flex-grow">{project.description}</p>
+                                        <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">{project.description}</p>
 
-                                        <div className="flex flex-col space-y-2 mt-auto pt-4 border-t border-gray-100">
+                                        <div className="flex flex-col space-y-2 mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                                             {project.links && project.links.map((link, i) => (
                                                 <a
                                                     key={i}
                                                     href={link.url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="flex items-center text-primary-600 font-medium text-sm hover:text-primary-800 transition-colors group"
+                                                    className="flex items-center text-primary-600 dark:text-primary-400 font-medium text-sm hover:text-primary-800 dark:hover:text-primary-300 transition-colors group"
                                                 >
                                                     <span className="mr-2">
                                                         {link.label.toLowerCase().includes('github') ? (
