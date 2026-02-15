@@ -173,7 +173,7 @@ export default function GalleryPage() {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen">
+            <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                 {/* Hero */}
                 <section className="gradient-bg text-white py-16 px-4">
                     <div className="max-w-4xl mx-auto text-center">
@@ -185,34 +185,34 @@ export default function GalleryPage() {
 
                 {/* Admin Upload Section */}
                 {isAdminUser && (
-                    <section className="py-12 px-4 bg-gray-50 border-b-2 border-gray-200">
+                    <section className="py-12 px-4 bg-gray-50 dark:bg-gray-900 border-b-2 border-gray-200 dark:border-gray-700 transition-colors duration-300">
                         <div className="max-w-3xl mx-auto">
-                            <div className="bg-white rounded-2xl shadow-lg p-8">
+                            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 transition-colors duration-300">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-bold text-gray-900">Upload Image</h2>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Upload Image</h2>
                                     <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-semibold">
                                         Admin Only
                                     </span>
                                 </div>
 
                                 {uploadMessage && (
-                                    <div className={`mb-4 p-4 rounded-lg ${uploadMessage.includes('success') ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                                    <div className={`mb-4 p-4 rounded-lg ${uploadMessage.includes('success') ? 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800' : 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-800'}`}>
                                         {uploadMessage}
                                     </div>
                                 )}
 
                                 <form onSubmit={handleUpload} className="space-y-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Select Image
                                         </label>
                                         <input
                                             type="file"
                                             accept="image/*"
                                             onChange={handleFileChange}
-                                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 p-2"
+                                            className="block w-full text-sm text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 p-2"
                                         />
-                                        <p className="mt-1 text-sm text-gray-500">PNG, JPG, WEBP up to 5MB</p>
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">PNG, JPG, WEBP up to 5MB</p>
                                     </div>
 
                                     {previewUrl && (
@@ -220,13 +220,13 @@ export default function GalleryPage() {
                                             <img
                                                 src={previewUrl}
                                                 alt="Preview"
-                                                className="w-full max-h-64 object-contain rounded-lg border-2 border-gray-200"
+                                                className="w-full max-h-64 object-contain rounded-lg border-2 border-gray-200 dark:border-gray-600"
                                             />
                                         </div>
                                     )}
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             Caption (Optional)
                                         </label>
                                         <input
@@ -234,7 +234,7 @@ export default function GalleryPage() {
                                             value={caption}
                                             onChange={(e) => setCaption(e.target.value)}
                                             placeholder="Enter image caption..."
-                                            className="input-field"
+                                            className="input-field dark:bg-gray-700 dark:text-white dark:border-gray-600"
                                         />
                                     </div>
 

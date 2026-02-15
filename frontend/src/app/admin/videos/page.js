@@ -95,7 +95,7 @@ export default function AdminVideosPage() {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen bg-gray-50">
+            <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                 {/* Header */}
                 <section className="gradient-bg text-white py-12 px-4">
                     <div className="max-w-6xl mx-auto">

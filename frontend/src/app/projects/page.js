@@ -31,7 +31,7 @@ export default function ProjectsPage() {
     return (
         <>
             <Navbar />
-            <main className="min-h-screen">
+            <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                 {/* Hero */}
                 <section className="gradient-bg text-white py-16 px-4">
                     <div className="max-w-4xl mx-auto text-center">
