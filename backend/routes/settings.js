@@ -66,6 +66,16 @@ router.put('/', auth, roleCheck('Admin'), upload.single('logo'), async (req, res
             Object.assign(settings.contactInfo, contactData);
         }
 
+        // Update Site Content
+        if (req.body.siteContent) {
+            const contentData = typeof req.body.siteContent === 'string'
+                ? JSON.parse(req.body.siteContent)
+                : req.body.siteContent;
+
+            if (!settings.siteContent) settings.siteContent = {};
+            Object.assign(settings.siteContent, contentData);
+        }
+
         if (req.body.darkModeEnabled !== undefined) {
             settings.darkModeEnabled = req.body.darkModeEnabled === 'true' || req.body.darkModeEnabled === true;
         }

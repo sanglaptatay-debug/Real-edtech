@@ -8,9 +8,12 @@ import CourseModal from '../components/CourseModal';
 import { coursesAPI } from '../utils/api';
 import { isAuthenticated } from '../utils/auth';
 
+import { useTheme } from '../context/ThemeContext';
+
 export default function Home() {
     const router = useRouter();
-    const [courses, setCourses] = useState([]);
+    const { fullSettings } = useTheme();
+    // ... rest of state ...
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -120,7 +123,7 @@ export default function Home() {
                             </svg>
                             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Vision</h2>
                             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                                "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."
+                                "{fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."}"
                             </p>
                             <a href="/about" className="btn-primary">
                                 Learn About Us

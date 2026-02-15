@@ -24,6 +24,8 @@ export default function AdminSettingsPage() {
         address: '',
         organization: '',
         youtubeLink: '',
+        aboutSubtitle: '',
+        visionText: '',
         darkModeEnabled: true
     });
 
@@ -47,6 +49,8 @@ export default function AdminSettingsPage() {
                     address: data.contactInfo?.address || '',
                     organization: data.contactInfo?.organization || '',
                     youtubeLink: data.contactInfo?.youtubeLink || '',
+                    aboutSubtitle: data.siteContent?.aboutSubtitle || 'We are empowering the youth of Bengal',
+                    visionText: data.siteContent?.visionText || 'We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations.',
                     darkModeEnabled: data.darkModeEnabled
                 });
                 if (data.logoUrl) {
@@ -91,6 +95,13 @@ export default function AdminSettingsPage() {
                 youtubeLink: formData.youtubeLink
             };
             data.append('contactInfo', JSON.stringify(contactInfo));
+
+            // Append Page Content as JSON string
+            const siteContent = {
+                aboutSubtitle: formData.aboutSubtitle,
+                visionText: formData.visionText
+            };
+            data.append('siteContent', JSON.stringify(siteContent));
 
             // Append Dark Mode setting
             data.append('darkModeEnabled', formData.darkModeEnabled);
@@ -253,6 +264,33 @@ export default function AdminSettingsPage() {
                                                         onChange={(e) => setFormData({ ...formData, youtubeLink: e.target.value })}
                                                         className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
                                                     />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Page Content Section */}
+                                        <div className="border-b border-gray-200 dark:border-gray-700 pb-8">
+                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">Page Content</h3>
+                                            <div className="space-y-6">
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">About Us Subtitle</label>
+                                                    <input
+                                                        type="text"
+                                                        value={formData.aboutSubtitle}
+                                                        onChange={(e) => setFormData({ ...formData, aboutSubtitle: e.target.value })}
+                                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                                                    />
+                                                    <p className="mt-1 text-xs text-gray-500">Appears under the big "About Us" heading.</p>
+                                                </div>
+                                                <div>
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Vision Text</label>
+                                                    <textarea
+                                                        value={formData.visionText}
+                                                        onChange={(e) => setFormData({ ...formData, visionText: e.target.value })}
+                                                        rows={3}
+                                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                                                    />
+                                                    <p className="mt-1 text-xs text-gray-500">Appears in the "Our Vision" section on Home and About pages.</p>
                                                 </div>
                                             </div>
                                         </div>

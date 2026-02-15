@@ -17,6 +17,10 @@ const SiteSettingsSchema = new mongoose.Schema({
         organization: { type: String, default: 'BIOROBODRAI' },
         youtubeLink: { type: String, default: 'https://www.youtube.com/embed/dQw4w9WgXcQ' }
     },
+    siteContent: {
+        aboutSubtitle: { type: String, default: 'We are empowering the youth of Bengal' },
+        visionText: { type: String, default: 'We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations.' }
+    },
     updatedAt: {
         type: Date,
         default: Date.now

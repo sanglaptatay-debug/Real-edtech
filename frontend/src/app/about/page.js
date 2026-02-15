@@ -1,7 +1,11 @@
+'use client';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function AboutPage() {
+    const { fullSettings } = useTheme();
+
     return (
         <>
             <Navbar />
@@ -11,7 +15,7 @@ export default function AboutPage() {
                     <div className="max-w-4xl mx-auto text-center">
                         <p className="text-blue-200 mb-3 text-sm uppercase tracking-wide">A Programme of BIOROBODRAI</p>
                         <h1 className="text-5xl font-bold mb-4">About Us</h1>
-                        <p className="text-xl text-blue-100">We are empowering the youth of Bengal</p>
+                        <p className="text-xl text-blue-100">{fullSettings?.siteContent?.aboutSubtitle || "We are empowering the youth of Bengal"}</p>
                     </div>
                 </section>
 
@@ -21,7 +25,7 @@ export default function AboutPage() {
                         <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 md:p-12 border-l-4 border-primary-600">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Our Vision</h2>
                             <p className="text-2xl text-gray-800 leading-relaxed text-center font-medium">
-                                "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."
+                                "{fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations."}"
                             </p>
                         </div>
                     </div>
