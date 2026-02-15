@@ -44,15 +44,13 @@ export default function Navbar() {
                                 className="h-10 w-auto object-contain"
                             />
                         ) : (
-                            <>
-                                <img
-                                    src="/default-logo.png"
-                                    alt="Bengal Education Ventures"
-                                    className="h-10 w-auto object-contain"
-                                />
-                                <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">Bengal Education Ventures</span>
-                            </>
+                            <img
+                                src="/default-logo.jpg"
+                                alt="Bengal Education Ventures"
+                                className="h-10 w-auto object-contain"
+                            />
                         )}
+                        <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">Bengal Education Ventures</span>
                     </Link>
 
                     {/* Desktop Navigation */}
