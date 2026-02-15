@@ -224,7 +224,19 @@ export default function AdminServicesPage() {
                                     <div key={service._id} className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border-l-4" style={{ borderColor: service.color === 'blue' ? '#3B82F6' : service.color === 'green' ? '#10B981' : service.color === 'purple' ? '#8B5CF6' : service.color === 'red' ? '#EF4444' : service.color === 'yellow' ? '#F59E0B' : '#6366F1' }}>
                                         <div className="flex justify-between items-start">
                                             <div className="flex items-center gap-2">
-                                                <h3 className={`text-lg font-bold mb-2 text-${service.color}-600`}>{service.title}</h3>
+                                                <h3
+                                                    className="text-lg font-bold mb-2"
+                                                    style={{
+                                                        color: service.color === 'blue' ? '#2563EB' :
+                                                            service.color === 'green' ? '#059669' :
+                                                                service.color === 'purple' ? '#7C3AED' :
+                                                                    service.color === 'red' ? '#DC2626' :
+                                                                        service.color === 'yellow' ? '#D97706' :
+                                                                            '#4F46E5'
+                                                    }}
+                                                >
+                                                    {service.title}
+                                                </h3>
                                                 <span className={`text-xs px-2 py-1 rounded-full ${service.type === 'mission' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
                                                     {service.type === 'mission' ? 'Mission' : 'Offer'}
                                                 </span>
