@@ -18,6 +18,11 @@ const ServiceSchema = new mongoose.Schema({
         type: String, // e.g., 'blue', 'green', 'purple'
         default: 'blue'
     },
+    type: {
+        type: String, // 'mission' or 'offering'
+        enum: ['mission', 'offering'],
+        default: 'offering'
+    },
     order: {
         type: Number,
         default: 0

@@ -15,6 +15,7 @@ export default function AdminServicesPage() {
         description: '',
         icon: '',
         color: 'blue',
+        type: 'offering',
         order: 0
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -69,6 +70,7 @@ export default function AdminServicesPage() {
             description: service.description,
             icon: service.icon || '',
             color: service.color || 'blue',
+            type: service.type || 'offering',
             order: service.order || 0
         });
         setIsEditing(true);
@@ -95,6 +97,7 @@ export default function AdminServicesPage() {
             description: '',
             icon: '',
             color: 'blue',
+            type: 'offering',
             order: 0
         });
         setIsEditing(false);
@@ -130,6 +133,18 @@ export default function AdminServicesPage() {
                     <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 h-fit">
                         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">{isEditing ? 'Edit Service' : 'Add New Service'}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                                <select
+                                    value={formData.type}
+                                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm px-4 py-2"
+                                >
+                                    <option value="offering">What We Offer (Service)</option>
+                                    <option value="mission">Our Mission</option>
+                                </select>
+                            </div>
+
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Title</label>
                                 <input
@@ -208,7 +223,12 @@ export default function AdminServicesPage() {
                                 {services.map((service) => (
                                     <div key={service._id} className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border-l-4" style={{ borderColor: service.color === 'blue' ? '#3B82F6' : service.color === 'green' ? '#10B981' : service.color === 'purple' ? '#8B5CF6' : service.color === 'red' ? '#EF4444' : service.color === 'yellow' ? '#F59E0B' : '#6366F1' }}>
                                         <div className="flex justify-between items-start">
-                                            <h3 className={`text-lg font-bold mb-2 text-${service.color}-600`}>{service.title}</h3>
+                                            <div className="flex items-center gap-2">
+                                                <h3 className={`text-lg font-bold mb-2 text-${service.color}-600`}>{service.title}</h3>
+                                                <span className={`text-xs px-2 py-1 rounded-full ${service.type === 'mission' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
+                                                    {service.type === 'mission' ? 'Mission' : 'Offer'}
+                                                </span>
+                                            </div>
                                             <div className="flex space-x-2">
                                                 <button
                                                     onClick={() => handleEdit(service)}
