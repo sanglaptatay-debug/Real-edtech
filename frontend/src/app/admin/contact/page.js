@@ -284,11 +284,78 @@ export default function AdminSettingsPage() {
                                                 </div>
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Vision Text</label>
+                                                    <div className="flex flex-wrap gap-2 mb-2">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const textarea = document.getElementById('visionText');
+                                                                const start = textarea.selectionStart;
+                                                                const end = textarea.selectionEnd;
+                                                                const text = formData.visionText;
+                                                                const before = text.substring(0, start);
+                                                                const selection = text.substring(start, end);
+                                                                const after = text.substring(end);
+                                                                setFormData({ ...formData, visionText: `${before}<b>${selection}</b>${after}` });
+                                                            }}
+                                                            className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded hover:bg-gray-300 dark:hover:bg-gray-500 text-sm font-bold"
+                                                        >
+                                                            B
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const textarea = document.getElementById('visionText');
+                                                                const start = textarea.selectionStart;
+                                                                const end = textarea.selectionEnd;
+                                                                const text = formData.visionText;
+                                                                const before = text.substring(0, start);
+                                                                const selection = text.substring(start, end);
+                                                                const after = text.substring(end);
+                                                                setFormData({ ...formData, visionText: `${before}<div class="text-left">${selection}</div>${after}` });
+                                                            }}
+                                                            className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded hover:bg-gray-300 dark:hover:bg-gray-500 text-sm"
+                                                        >
+                                                            Align Left
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const textarea = document.getElementById('visionText');
+                                                                const start = textarea.selectionStart;
+                                                                const end = textarea.selectionEnd;
+                                                                const text = formData.visionText;
+                                                                const before = text.substring(0, start);
+                                                                const selection = text.substring(start, end);
+                                                                const after = text.substring(end);
+                                                                setFormData({ ...formData, visionText: `${before}<div class="text-center">${selection}</div>${after}` });
+                                                            }}
+                                                            className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded hover:bg-gray-300 dark:hover:bg-gray-500 text-sm"
+                                                        >
+                                                            Align Center
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                const textarea = document.getElementById('visionText');
+                                                                const start = textarea.selectionStart;
+                                                                const end = textarea.selectionEnd;
+                                                                const text = formData.visionText;
+                                                                const before = text.substring(0, start);
+                                                                const selection = text.substring(start, end);
+                                                                const after = text.substring(end);
+                                                                setFormData({ ...formData, visionText: `${before}<br/>${after}` });
+                                                            }}
+                                                            className="px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded hover:bg-gray-300 dark:hover:bg-gray-500 text-sm"
+                                                        >
+                                                            New Line
+                                                        </button>
+                                                    </div>
                                                     <textarea
+                                                        id="visionText"
                                                         value={formData.visionText}
                                                         onChange={(e) => setFormData({ ...formData, visionText: e.target.value })}
                                                         rows={10}
-                                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+                                                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 font-mono text-sm"
                                                     />
                                                     <p className="mt-1 text-xs text-gray-500">Appears in the "Our Vision" section on Home and About pages.</p>
                                                 </div>
