@@ -8,6 +8,7 @@ import { servicesAPI } from '../../utils/api';
 export default function AboutPage() {
     const { fullSettings } = useTheme();
     const [services, setServices] = useState([]);
+    const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
 
     useEffect(() => {
         fetchServices();
@@ -44,13 +45,15 @@ export default function AboutPage() {
                                     <img
                                         src={fullSettings.logoUrl.startsWith('data:') ? fullSettings.logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${fullSettings.logoUrl}`}
                                         alt="Logo"
-                                        className="h-24 w-auto object-contain"
+                                        className="h-24 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
+                                        onClick={() => setIsLogoModalOpen(true)}
                                     />
                                 ) : (
                                     <img
                                         src="/default-logo.jpg"
                                         alt="Bengal Education Ventures"
-                                        className="h-24 w-auto object-contain"
+                                        className="h-24 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
+                                        onClick={() => setIsLogoModalOpen(true)}
                                     />
                                 )}
                             </div>
@@ -134,6 +137,40 @@ export default function AboutPage() {
                 </section>
             </main>
             <Footer />
+
+            {/* Logo Modal */}
+            {isLogoModalOpen && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm p-4 animate-fadeIn"
+                    onClick={() => setIsLogoModalOpen(false)}
+                >
+                    <div className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
+                        <button
+                            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+                            onClick={() => setIsLogoModalOpen(false)}
+                        >
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        {fullSettings?.logoUrl ? (
+                            <img
+                                src={fullSettings.logoUrl.startsWith('data:') ? fullSettings.logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${fullSettings.logoUrl}`}
+                                alt="Logo Full Screen"
+                                className="max-w-full max-h-full object-contain"
+                                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+                            />
+                        ) : (
+                            <img
+                                src="/default-logo.jpg"
+                                alt="Bengal Education Ventures"
+                                className="max-w-full max-h-full object-contain"
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
         </>
     );
 }
