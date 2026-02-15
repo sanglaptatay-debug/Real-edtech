@@ -356,6 +356,61 @@ export default function ManageAdmins() {
                 </div>
             )}
 
+            {/* Password Reset Modal */}
+            {isPasswordModalOpen && (
+                <div className="fixed inset-0 z-50 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                            <div className="absolute inset-0 bg-gray-500 opacity-75" onClick={() => setIsPasswordModalOpen(false)}></div>
+                        </div>
+                        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                        <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
+                                    Change Admin Password
+                                </h3>
+
+                                {error && (
+                                    <div className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                                        <span className="block sm:inline">{error}</span>
+                                    </div>
+                                )}
+
+                                <form onSubmit={handlePasswordReset}>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">New Password</label>
+                                        <input
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            required
+                                            className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2 border bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                            placeholder="Enter new password (min 6 chars)"
+                                        />
+                                    </div>
+                                    <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                                        <button
+                                            type="submit"
+                                            disabled={passwordLoading}
+                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:col-start-2 sm:text-sm"
+                                        >
+                                            {passwordLoading ? 'Updating...' : 'Update Password'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsPasswordModalOpen(false)}
+                                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-600 text-base font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </div>
     );
