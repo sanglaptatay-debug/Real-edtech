@@ -220,46 +220,59 @@ export default function AdminServicesPage() {
                             <p className="text-gray-500 dark:text-gray-400">No services added yet.</p>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {services.map((service) => (
-                                    <div key={service._id} className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border-l-4" style={{ borderColor: service.color === 'blue' ? '#3B82F6' : service.color === 'green' ? '#10B981' : service.color === 'purple' ? '#8B5CF6' : service.color === 'red' ? '#EF4444' : service.color === 'yellow' ? '#F59E0B' : '#6366F1' }}>
-                                        <div className="flex justify-between items-start">
-                                            <div className="flex items-center gap-2">
-                                                <h3
-                                                    className="text-lg font-bold mb-2"
-                                                    style={{
-                                                        color: service.color === 'blue' ? '#2563EB' :
-                                                            service.color === 'green' ? '#059669' :
-                                                                service.color === 'purple' ? '#7C3AED' :
-                                                                    service.color === 'red' ? '#DC2626' :
-                                                                        service.color === 'yellow' ? '#D97706' :
-                                                                            '#4F46E5'
-                                                    }}
-                                                >
-                                                    {service.title}
-                                                </h3>
-                                                <span className={`text-xs px-2 py-1 rounded-full ${service.type === 'mission' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
-                                                    {service.type === 'mission' ? 'Mission' : 'Offer'}
-                                                </span>
+                                {services.map((service) => {
+                                    const colorMap = {
+                                        blue: '#2563EB',
+                                        green: '#059669',
+                                        purple: '#7C3AED',
+                                        red: '#DC2626',
+                                        yellow: '#EAB308',
+                                        indigo: '#4F46E5'
+                                    };
+                                    const borderColorMap = {
+                                        blue: '#3B82F6',
+                                        green: '#10B981',
+                                        purple: '#8B5CF6',
+                                        red: '#EF4444',
+                                        yellow: '#EAB308',
+                                        indigo: '#6366F1'
+                                    };
+                                    return (
+                                        <div key={service._id} className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border-l-4" style={{ borderColor: borderColorMap[service.color] || borderColorMap.indigo }}>
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex items-center gap-2">
+                                                    <h3
+                                                        className="text-lg font-bold mb-2"
+                                                        style={{
+                                                            color: colorMap[service.color] || colorMap.indigo
+                                                        }}
+                                                    >
+                                                        {service.title}
+                                                    </h3>
+                                                    <span className={`text-xs px-2 py-1 rounded-full ${service.type === 'mission' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}`}>
+                                                        {service.type === 'mission' ? 'Mission' : 'Offer'}
+                                                    </span>
+                                                </div>
+                                                <div className="flex space-x-2">
+                                                    <button
+                                                        onClick={() => handleEdit(service)}
+                                                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(service._id)}
+                                                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div className="flex space-x-2">
-                                                <button
-                                                    onClick={() => handleEdit(service)}
-                                                    className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(service._id)}
-                                                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
+                                            <p className="text-gray-600 dark:text-gray-300 text-sm">{service.description}</p>
+                                            <div className="mt-2 text-xs text-gray-400">Order: {service.order}</div>
                                         </div>
-                                        <p className="text-gray-600 dark:text-gray-300 text-sm">{service.description}</p>
-                                        <div className="mt-2 text-xs text-gray-400">Order: {service.order}</div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
