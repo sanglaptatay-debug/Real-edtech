@@ -156,7 +156,7 @@ export default function AdminCoursesPage() {
                                         {course.image && (
                                             <div className="h-48 w-full relative mb-4 rounded-lg overflow-hidden">
                                                 <img
-                                                    src={course.image.startsWith('http') ? course.image : `http://localhost:5000${course.image}`}
+                                                    src={course.image.startsWith('http') || course.image.startsWith('data:') ? course.image : `http://localhost:5000${course.image}`}
                                                     alt={course.title}
                                                     className="object-cover w-full h-full"
                                                 />
