@@ -13,7 +13,7 @@ import { useTheme } from '../context/ThemeContext';
 export default function Home() {
     const router = useRouter();
     const { fullSettings } = useTheme();
-    // ... rest of state ...
+    const [courses, setCourses] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -109,6 +109,8 @@ export default function Home() {
                             <div className="text-center py-12">
                                 <p className="text-gray-600 dark:text-gray-400 text-lg">No courses available at the moment.</p>
                                 <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Check back soon for exciting new courses!</p>
+                                {/* Debug info - remove in production if not needed */}
+                                <p className="text-xs text-gray-400 mt-4">Debug: Courses fetched: {courses ? courses.length : 'undefined'}</p>
                             </div>
                         )}
                     </div>
