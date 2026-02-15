@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata = {
     title: 'Bengal Education Ventures - Empowering Bengal Youth',
-    description: 'Live technical skill based EdTech platform specializing in AI, Drone Technology, 3D Printing, Bio Technology, and other areas for the youth of Bengal.',
+    description: 'Live technical skill based EdTech platform specializing in AI, Drone Technology, 3D Printing, Bio Technology and other areas for the youth of Bengal.',
 };
 
 export default function RootLayout({ children }) {
