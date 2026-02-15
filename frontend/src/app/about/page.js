@@ -25,7 +25,7 @@ export default function AboutPage() {
                         <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 md:p-12 border-l-4 border-primary-600">
                             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Our Vision</h2>
                             <div
-                                className="text-2xl text-gray-800 leading-relaxed text-center font-medium"
+                                className="text-2xl text-gray-800 leading-relaxed text-left font-medium whitespace-pre-wrap"
                                 dangerouslySetInnerHTML={{ __html: fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations." }}
                             />
                         </div>

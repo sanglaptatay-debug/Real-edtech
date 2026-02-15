@@ -123,7 +123,7 @@ export default function Home() {
                             </svg>
                             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Our Vision</h2>
                             <div
-                                className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6"
+                                className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-wrap text-left"
                                 dangerouslySetInnerHTML={{ __html: fullSettings?.siteContent?.visionText || "We are empowering the youth of Bengal. We are charging a minimal amount to ensure the sustainability and continuity of our operations." }}
                             />
                             <a href="/about" className="btn-primary">
