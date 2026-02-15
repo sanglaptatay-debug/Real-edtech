@@ -39,6 +39,21 @@ export default function AboutPage() {
                 <section className="py-16 px-4 bg-white">
                     <div className="max-w-4xl mx-auto">
                         <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 md:p-12 border-l-4 border-primary-600">
+                            <div className="flex justify-center mb-6">
+                                {fullSettings?.logoUrl ? (
+                                    <img
+                                        src={fullSettings.logoUrl.startsWith('data:') ? fullSettings.logoUrl : `${process.env.NEXT_PUBLIC_API_URL.replace('/api', '')}${fullSettings.logoUrl}`}
+                                        alt="Logo"
+                                        className="h-24 w-auto object-contain"
+                                    />
+                                ) : (
+                                    <img
+                                        src="/default-logo.jpg"
+                                        alt="Bengal Education Ventures"
+                                        className="h-24 w-auto object-contain"
+                                    />
+                                )}
+                            </div>
                             <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Our Vision</h2>
                             <div
                                 className="text-2xl text-gray-800 leading-relaxed text-left font-medium whitespace-pre-wrap"
