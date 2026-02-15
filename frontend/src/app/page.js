@@ -67,7 +67,7 @@ export default function Home() {
                             Empowering Bengal's Future
                         </h1>
                         <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto animate-fade-in">
-                            Live, cohort based learning in AI, Drone Technology, and 3D Printing
+                            Live, technical skill based learning in AI, Drone Technology, and 3D Printing
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
                             <a href="#courses" className="btn-primary bg-white text-primary-600 hover:bg-gray-100 border border-transparent">
