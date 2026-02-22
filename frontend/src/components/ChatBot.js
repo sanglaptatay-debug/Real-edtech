@@ -204,7 +204,7 @@ export default function ChatBot() {
                         AI
                     </div>
                     <div className="flex-1">
-                        <p className="text-white font-semibold text-sm leading-tight">BEV Assistant</p>
+                        <p className="text-white font-semibold text-sm leading-tight">Student Guide</p>
                         <p className="text-blue-100 text-xs">Bengal Education Ventures</p>
                     </div>
                     <div className="flex items-center gap-1">
