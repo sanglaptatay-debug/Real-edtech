@@ -46,3 +46,25 @@ export const isEnrolledInCourse = (courseId) => {
     if (!user || !user.enrolledCourses) return false;
     return user.enrolledCourses.includes(courseId);
 };
+
+// ── Inactivity timer helpers ──────────────────────────────────────────────────
+
+export const setLastActivity = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('lastActivity', Date.now().toString());
+    }
+};
+
+export const getLastActivity = () => {
+    if (typeof window !== 'undefined') {
+        const val = localStorage.getItem('lastActivity');
+        return val ? parseInt(val, 10) : null;
+    }
+    return null;
+};
+
+export const clearLastActivity = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('lastActivity');
+    }
+};

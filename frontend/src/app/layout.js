@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { Inter } from 'next/font/google';
 import { ContactProvider } from '../contexts/ContactContext';
 import { ThemeProvider } from '../context/ThemeContext';
+import InactivityProvider from '../components/InactivityProvider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
             <body>
                 <ContactProvider>
                     <ThemeProvider>
-                        {children}
+                        <InactivityProvider>
+                            {children}
+                        </InactivityProvider>
                     </ThemeProvider>
                 </ContactProvider>
             </body>
