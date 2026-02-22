@@ -20,6 +20,7 @@ OUR COURSES AND WHAT WE TEACH:
 - Biotechnology: Modern biotech concepts and applications
 - Robotics: Building and programming robots
 - Coding & Programming: Web development, software skills
+- Digital Marketing: SEO, social media marketing, content strategy, how digital marketing is changing businesses worldwide
 
 RESPONSE STYLE EXAMPLE:
 User: "What is AI?"
