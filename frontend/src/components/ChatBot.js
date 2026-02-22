@@ -155,47 +155,61 @@ export default function ChatBot() {
     };
 
     const clearChat = () => {
-        setMessages([WELCOME_MESSAGE]);
+        setMessages([WELCOME[language]]);
         setError('');
     };
 
     return (
         <>
-            {/* ── Floating Button ── */}
-            <button
-                onClick={() => setIsOpen(o => !o)}
-                aria-label={isOpen ? 'Close chat' : 'Open chat assistant'}
-                className={`
-                    fixed bottom-6 right-6 z-50
-                    w-14 h-14 rounded-full shadow-2xl
-                    bg-gradient-to-br from-blue-600 to-purple-700
-                    hover:from-blue-500 hover:to-purple-600
-                    text-white flex items-center justify-center
-                    transition-all duration-300 hover:scale-110 active:scale-95
-                    focus:outline-none focus:ring-4 focus:ring-blue-400/50
-                `}
-            >
-                {/* Unread badge */}
-                {unread > 0 && !isOpen && (
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs font-bold flex items-center justify-center text-white animate-pulse">
-                        {unread}
+            {/* ── Floating Button + Label ── */}
+            <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-1.5">
+                <button
+                    onClick={() => setIsOpen(o => !o)}
+                    aria-label={isOpen ? 'Close chat' : 'Open chat assistant'}
+                    className={`
+                        relative w-14 h-14 rounded-full shadow-2xl
+                        bg-gradient-to-br from-blue-600 to-purple-700
+                        hover:from-blue-500 hover:to-purple-600
+                        text-white flex items-center justify-center
+                        transition-all duration-300 hover:scale-110 active:scale-95
+                        focus:outline-none focus:ring-4 focus:ring-blue-400/50
+                    `}
+                >
+                    {/* Unread badge */}
+                    {unread > 0 && !isOpen && (
+                        <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-xs font-bold flex items-center justify-center text-white animate-pulse">
+                            {unread}
+                        </span>
+                    )}
+
+                    {/* Icon toggle */}
+                    <div className={`transition-transform duration-300 ${isOpen ? 'rotate-90 scale-90' : 'rotate-0'}`}>
+                        {isOpen ? (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                        )}
+                    </div>
+                </button>
+
+                {/* Label below button */}
+                {!isOpen && (
+                    <span
+                        className="
+                            px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap
+                            bg-gradient-to-r from-blue-600 to-purple-700 text-white
+                            shadow-md
+                        "
+                    >
+                        Student Assistant AI
                     </span>
                 )}
-
-                {/* Icon toggle */}
-                <div className={`transition-transform duration-300 ${isOpen ? 'rotate-90 scale-90' : 'rotate-0'}`}>
-                    {isOpen ? (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    ) : (
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                        </svg>
-                    )}
-                </div>
-            </button>
+            </div>
 
             {/* ── Chat Window ── */}
             <div
