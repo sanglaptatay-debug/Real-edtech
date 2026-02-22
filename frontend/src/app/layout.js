@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { ContactProvider } from '../contexts/ContactContext';
 import { ThemeProvider } from '../context/ThemeContext';
 import InactivityProvider from '../components/InactivityProvider';
+import ChatBot from '../components/ChatBot';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
                         <InactivityProvider>
                             {children}
                         </InactivityProvider>
+                        <ChatBot />
                     </ThemeProvider>
                 </ContactProvider>
             </body>

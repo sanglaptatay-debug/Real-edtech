@@ -54,6 +54,10 @@ app.use('/api/settings', require('./routes/settings'));
 // Project videos routes
 app.use('/api/project-videos', require('./routes/projectVideos'));
 
+// AI Chat route
+app.use('/api/chat', require('./routes/chat'));
+
+
 // Root route
 app.get('/', (req, res) => {
     res.json({
