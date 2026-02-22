@@ -3,9 +3,15 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-const WELCOME_MESSAGE = {
-    role: 'assistant',
-    content: "👋 Hi! I'm your Bengal Education Ventures assistant. Ask me anything about our courses in AI, Drone Technology, 3D Printing, Biotechnology and more!",
+const WELCOME = {
+    en: {
+        role: 'assistant',
+        content: "👋 Hi! I'm your Bengal Education Ventures Student Guide. Ask me anything about our courses in AI, Drone Technology, 3D Printing, Digital Marketing and more!",
+    },
+    bn: {
+        role: 'assistant',
+        content: "👋 নমস্কার! আমি Bengal Education Ventures-এর Student Guide। AI, ড্রোন টেকনোলজি, ডিজিটাল মার্কেটিং সহ আমাদের যেকোনো কোর্স সম্পর্কে জিজ্ঞেস করো!",
+    },
 };
 
 // ── Markdown-lite renderer (bold, code, newlines) ─────────────────────────────
@@ -60,7 +66,8 @@ function TypingIndicator() {
 // ── Main ChatBot component ────────────────────────────────────────────────────
 export default function ChatBot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState([WELCOME_MESSAGE]);
+    const [language, setLanguage] = useState('en'); // 'en' | 'bn'
+    const [messages, setMessages] = useState([WELCOME.en]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -82,6 +89,14 @@ export default function ChatBot() {
             setTimeout(() => inputRef.current?.focus(), 100);
         }
     }, [isOpen]);
+
+    // Language toggle: reset chat with appropriate welcome message
+    const toggleLanguage = useCallback(() => {
+        const next = language === 'en' ? 'bn' : 'en';
+        setLanguage(next);
+        setMessages([WELCOME[next]]);
+        setError('');
+    }, [language]);
 
     const sendMessage = useCallback(async () => {
         const text = input.trim();
@@ -106,6 +121,7 @@ export default function ChatBot() {
                     messages: newMessages
                         .filter(m => m.role !== 'system')
                         .map(m => ({ role: m.role, content: m.content })),
+                    language,
                 }),
                 signal: controller.signal,
             });
@@ -207,7 +223,17 @@ export default function ChatBot() {
                         <p className="text-white font-semibold text-sm leading-tight">Student Guide</p>
                         <p className="text-blue-100 text-xs">Bengal Education Ventures</p>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
+                        {/* Language toggle */}
+                        <button
+                            onClick={toggleLanguage}
+                            title={language === 'en' ? 'Switch to Bengali' : 'Switch to English'}
+                            className="flex items-center gap-0.5 px-2 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition-colors"
+                        >
+                            <span className={language === 'en' ? 'opacity-100' : 'opacity-50'}>EN</span>
+                            <span className="text-white/40 mx-0.5">|</span>
+                            <span className={language === 'bn' ? 'opacity-100' : 'opacity-50'}>বাং</span>
+                        </button>
                         {/* Clear button */}
                         <button
                             onClick={clearChat}
@@ -220,7 +246,7 @@ export default function ChatBot() {
                             </svg>
                         </button>
                         {/* Online dot */}
-                        <div className="flex items-center gap-1 ml-1">
+                        <div className="flex items-center gap-1">
                             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                             <span className="text-green-200 text-xs">Online</span>
                         </div>
@@ -275,7 +301,7 @@ export default function ChatBot() {
                             value={input}
                             onChange={e => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Ask about our courses…"
+                            placeholder={language === 'bn' ? 'কোর্স সম্পর্কে জিজ্ঞেস করো…' : 'Ask about our courses…'}
                             rows={1}
                             disabled={isLoading}
                             className="
