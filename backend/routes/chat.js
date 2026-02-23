@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
+const Groq = require('groq-sdk');
 
-const SARVAM_API_URL = 'https://api.sarvam.ai/v1/chat/completions';
-const SARVAM_MODEL = 'sarvam-m';
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const COURSES = `
 OUR COURSES AND WHAT WE TEACH:
@@ -72,47 +71,27 @@ router.post('/', async (req, res) => {
 
         const systemPrompt = language === 'bn' ? SYSTEM_PROMPT_BN : SYSTEM_PROMPT_EN;
 
-        const response = await axios.post(
-            SARVAM_API_URL,
-            {
-                model: SARVAM_MODEL,
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    ...sanitized,
-                ],
-                temperature: 0.7,
-                max_tokens: 512,
-            },
-            {
-                headers: {
-                    'api-subscription-key': process.env.SARVAM_API_KEY,
-                    'Content-Type': 'application/json',
-                },
-                timeout: 30000,
-            }
-        );
+        const completion = await groq.chat.completions.create({
+            model: 'llama-3.1-8b-instant',
+            messages: [
+                { role: 'system', content: systemPrompt },
+                ...sanitized,
+            ],
+            temperature: 0.7,
+            max_tokens: 512,
+        });
 
-        const reply =
-            response.data?.choices?.[0]?.message?.content ||
-            'Sorry, I could not generate a response.';
-
+        const reply = completion.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
         res.json({ reply });
 
     } catch (err) {
-        console.error('Chat error:', err?.response?.data || err?.message || err);
-
-        const status = err?.response?.status;
-
-        if (status === 429) {
+        console.error('Chat error:', err?.message || err);
+        if (err?.status === 429) {
             return res.status(429).json({ error: 'Too many requests. Please wait a moment and try again.' });
         }
-        if (status === 401 || status === 403) {
-            return res.status(500).json({ error: 'Chat service configuration error. Invalid API key.' });
+        if (err?.status === 401) {
+            return res.status(500).json({ error: 'Chat service configuration error.' });
         }
-        if (err.code === 'ECONNABORTED') {
-            return res.status(504).json({ error: 'Chat service timed out. Please try again.' });
-        }
-
         res.status(500).json({ error: 'Chat service is temporarily unavailable.' });
     }
 });
