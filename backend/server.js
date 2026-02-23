@@ -94,4 +94,17 @@ app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📍 Environment: ${process.env.NODE_ENV}`);
     console.log(`🕒 Server updated at: ${new Date().toISOString()}`);
+
+    // Keep-alive ping for Render free tier (prevents cold starts)
+    if (process.env.NODE_ENV !== 'development') {
+        const RENDER_URL = process.env.RENDER_EXTERNAL_URL || `https://real-edtech.onrender.com`;
+        setInterval(() => {
+            require('https').get(`${RENDER_URL}/`, (res) => {
+                console.log(`💓 Keep-alive ping: ${res.statusCode}`);
+            }).on('error', (e) => {
+                console.error('Keep-alive error:', e.message);
+            });
+        }, 14 * 60 * 1000); // every 14 minutes
+    }
 });
+
