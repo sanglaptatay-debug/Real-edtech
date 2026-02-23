@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { coursesAPI, liveSessionsAPI, resourcesAPI } from '../../../utils/api';
@@ -8,6 +8,7 @@ import { getUser, isAuthenticated, isEnrolledInCourse } from '../../../utils/aut
 
 export default function CourseDetailsPage() {
     const params = useParams();
+    const router = useRouter();
     const [course, setCourse] = useState(null);
     const [sessions, setSessions] = useState([]);
     const [resources, setResources] = useState([]);
@@ -147,14 +148,12 @@ export default function CourseDetailsPage() {
                                         </div>
                                         {isEnrolled && session.gmeetLink && (
                                             <div className="mt-4 pt-4 border-t border-gray-200">
-                                                <a
-                                                    href={session.gmeetLink}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
+                                                <button
+                                                    onClick={() => router.push(`/courses/${params.id}/live-session/${session._id}`)}
                                                     className="btn-primary inline-block"
                                                 >
                                                     Join Live Session
-                                                </a>
+                                                </button>
                                             </div>
                                         )}
                                     </div>

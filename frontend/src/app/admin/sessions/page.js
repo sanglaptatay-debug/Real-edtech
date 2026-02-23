@@ -62,7 +62,7 @@ export default function AdminSessionsPage() {
             sessionTitle: session.sessionTitle,
             scheduledTime: new Date(session.scheduledTime).toISOString().slice(0, 16),
             gmeetLink: session.gmeetLink,
-            courseId: session.courseId
+            courseId: session.courseId?._id || session.courseId
         });
         setShowModal(true);
     };
@@ -101,7 +101,13 @@ export default function AdminSessionsPage() {
     };
 
     const getCourseTitle = (courseId) => {
-        const course = courses.find(c => c._id === courseId);
+        // If courseId is already populated as an object
+        if (courseId && courseId.title) {
+            return courseId.title;
+        }
+        // If courseId is just an ID string, find from courses array
+        const idToCheck = courseId?._id || courseId;
+        const course = courses.find(c => c._id === idToCheck);
         return course?.title || 'Unknown Course';
     };
 
@@ -271,7 +277,15 @@ export default function AdminSessionsPage() {
                                 <input
                                     type="url"
                                     value={formData.gmeetLink}
-                                    onChange={(e) => setFormData({ ...formData, gmeetLink: e.target.value })}
+                                    onChange={(e) => {
+                                        let val = e.target.value;
+                                        // Auto-extract URL if user pastes entire Google Meet invitation text
+                                        const urlMatch = val.match(/(https?:\/\/[^\s]+)/);
+                                        if (urlMatch) {
+                                            val = urlMatch[0];
+                                        }
+                                        setFormData({ ...formData, gmeetLink: val });
+                                    }}
                                     placeholder="https://meet.google.com/..."
                                     className="input-field"
                                 />
