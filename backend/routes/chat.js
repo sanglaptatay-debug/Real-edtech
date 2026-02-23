@@ -72,7 +72,7 @@ router.post('/', async (req, res) => {
         const systemPrompt = language === 'bn' ? SYSTEM_PROMPT_BN : SYSTEM_PROMPT_EN;
 
         const completion = await groq.chat.completions.create({
-            model: 'llama-3.1-8b-instant',
+            model: 'llama-3.3-70b-versatile',
             messages: [
                 { role: 'system', content: systemPrompt },
                 ...sanitized,
