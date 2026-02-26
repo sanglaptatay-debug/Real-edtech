@@ -197,12 +197,14 @@ export default function CourseDetailsPage() {
                                         </div>
                                         {isEnrolled && session.gmeetLink && (
                                             <div className="mt-4 pt-4 border-t border-gray-200">
-                                                <button
-                                                    onClick={() => router.push(`/courses/${params.id}/live-session/${session._id}`)}
+                                                <a
+                                                    href={session.gmeetLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
                                                     className="btn-primary inline-block"
                                                 >
-                                                    Join Live Session
-                                                </button>
+                                                    🎥 Join Live Session
+                                                </a>
                                             </div>
                                         )}
                                     </div>
