@@ -104,12 +104,18 @@ export default function CourseDetailsPage() {
                                     </span>
                                     <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">{course.title}</h1>
                                     <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed mb-8">{course.summary}</p>
-                                    {!isEnrolled && course.googleFormLink && (
+                                    {!isEnrolled && (
                                         <a
-                                            href={course.googleFormLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1"
+                                            href={course.googleFormLink || "#"}
+                                            target={course.googleFormLink ? "_blank" : undefined}
+                                            rel={course.googleFormLink ? "noopener noreferrer" : undefined}
+                                            onClick={(e) => {
+                                                if (!course.googleFormLink) {
+                                                    e.preventDefault();
+                                                    alert("Enrollment link is not available yet. Please contact support.");
+                                                }
+                                            }}
+                                            className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1 cursor-pointer"
                                         >
                                             Enroll Now to Join Live Sessions
                                         </a>
@@ -125,12 +131,18 @@ export default function CourseDetailsPage() {
                                 </span>
                                 <h1 className="text-5xl font-bold mb-4">{course.title}</h1>
                                 <p className="text-xl text-blue-100 mb-8">{course.summary}</p>
-                                {!isEnrolled && course.googleFormLink && (
+                                {!isEnrolled && (
                                     <a
-                                        href={course.googleFormLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1"
+                                        href={course.googleFormLink || "#"}
+                                        target={course.googleFormLink ? "_blank" : undefined}
+                                        rel={course.googleFormLink ? "noopener noreferrer" : undefined}
+                                        onClick={(e) => {
+                                            if (!course.googleFormLink) {
+                                                e.preventDefault();
+                                                alert("Enrollment link is not available yet. Please contact support.");
+                                            }
+                                        }}
+                                        className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1 cursor-pointer"
                                     >
                                         Enroll Now to Join Live Sessions
                                     </a>
@@ -175,13 +187,19 @@ export default function CourseDetailsPage() {
                                                     Join Live Session
                                                 </button>
                                             </div>
-                                        ) : !isEnrolled && course.googleFormLink ? (
+                                        ) : !isEnrolled ? (
                                             <div className="mt-4 pt-4 border-t border-gray-200">
                                                 <a
-                                                    href={course.googleFormLink}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="btn-primary inline-block text-center"
+                                                    href={course.googleFormLink || "#"}
+                                                    target={course.googleFormLink ? "_blank" : undefined}
+                                                    rel={course.googleFormLink ? "noopener noreferrer" : undefined}
+                                                    onClick={(e) => {
+                                                        if (!course.googleFormLink) {
+                                                            e.preventDefault();
+                                                            alert("Enrollment link is not available yet. Please contact support.");
+                                                        }
+                                                    }}
+                                                    className="btn-primary inline-block text-center cursor-pointer"
                                                 >
                                                     Enroll to Join
                                                 </a>
@@ -230,15 +248,21 @@ export default function CourseDetailsPage() {
                     )}
 
                     {/* Enrollment CTA */}
-                    {!isEnrolled && course.googleFormLink && (
-                        <section className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 text-center">
+                    {!isEnrolled && (
+                        <section className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 text-center mt-12 mb-12">
                             <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
                             <p className="text-gray-700 mb-6">Enroll now to access live sessions and course materials</p>
                             <a
-                                href={course.googleFormLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn-primary inline-block"
+                                href={course.googleFormLink || "#"}
+                                target={course.googleFormLink ? "_blank" : undefined}
+                                rel={course.googleFormLink ? "noopener noreferrer" : undefined}
+                                onClick={(e) => {
+                                    if (!course.googleFormLink) {
+                                        e.preventDefault();
+                                        alert("Enrollment link is not available yet. Please contact support.");
+                                    }
+                                }}
+                                className="btn-primary inline-block cursor-pointer"
                             >
                                 Enroll in This Course
                             </a>
