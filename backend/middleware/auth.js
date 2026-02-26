@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Student = require('../models/Student');
 
 const auth = async (req, res, next) => {
     try {
@@ -13,8 +14,16 @@ const auth = async (req, res, next) => {
         // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Find user
-        const user = await User.findById(decoded.userId);
+        // Find user — check Student collection first, then admin User collection
+        let user = await Student.findById(decoded.userId);
+        let role = 'student';
+
+        if (!user) {
+            user = await User.findById(decoded.userId);
+            if (user) {
+                role = user.role || 'Admin';
+            }
+        }
 
         if (!user) {
             return res.status(401).json({ error: 'User not found' });
@@ -24,7 +33,7 @@ const auth = async (req, res, next) => {
         req.user = {
             userId: user._id,
             email: user.email,
-            role: user.role,
+            role: decoded.role || role,  // prefer the role from token
             enrolledCourses: user.enrolledCourses
         };
 
@@ -35,3 +44,4 @@ const auth = async (req, res, next) => {
 };
 
 module.exports = auth;
+
