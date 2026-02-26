@@ -1,11 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import CourseTile from '../../components/CourseTile';
 import { coursesAPI } from '../../utils/api';
 
 export default function CoursesPage() {
+    const router = useRouter();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -77,56 +79,13 @@ export default function CoursesPage() {
                                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                                     Showing {filtered.length} course{filtered.length !== 1 ? 's' : ''}
                                 </p>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {filtered.map(course => (
-                                        <Link
+                                        <CourseTile
                                             key={course._id}
-                                            href={`/courses/${course._id}`}
-                                            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 flex flex-col"
-                                        >
-                                            {/* Thumbnail / Colour Banner */}
-                                            {course.thumbnail ? (
-                                                <img
-                                                    src={course.thumbnail}
-                                                    alt={course.title}
-                                                    className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-44 bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-5xl group-hover:from-primary-600 transition-colors duration-300">
-                                                    🎓
-                                                </div>
-                                            )}
-
-                                            <div className="p-6 flex flex-col flex-1">
-                                                {/* Category badge */}
-                                                {course.category && (
-                                                    <span className="text-xs font-semibold uppercase tracking-wider text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2.5 py-1 rounded-full mb-3 w-fit">
-                                                        {course.category}
-                                                    </span>
-                                                )}
-
-                                                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                                                    {course.title}
-                                                </h2>
-
-                                                <p className="text-gray-500 dark:text-gray-400 text-sm flex-1 line-clamp-3 mb-4">
-                                                    {course.description || 'Click to learn more about this course.'}
-                                                </p>
-
-                                                {/* Meta row */}
-                                                <div className="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                                                    <span className="flex items-center gap-1">
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg>
-                                                        {course.duration || 'Self-paced'}
-                                                    </span>
-                                                    <span className="flex items-center gap-1 text-primary-600 dark:text-primary-400 font-medium group-hover:underline">
-                                                        View Details →
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </Link>
+                                            course={course}
+                                            onClick={() => router.push(`/courses/${course._id}`)}
+                                        />
                                     ))}
                                 </div>
                             </>
