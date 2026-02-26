@@ -195,7 +195,7 @@ export default function CourseDetailsPage() {
                                                 </p>
                                             </div>
                                         </div>
-                                        {isEnrolled && session.gmeetLink ? (
+                                        {isEnrolled && session.gmeetLink && (
                                             <div className="mt-4 pt-4 border-t border-gray-200">
                                                 <button
                                                     onClick={() => router.push(`/courses/${params.id}/live-session/${session._id}`)}
@@ -204,17 +204,7 @@ export default function CourseDetailsPage() {
                                                     Join Live Session
                                                 </button>
                                             </div>
-                                        ) : !isEnrolled ? (
-                                            <div className="mt-4 pt-4 border-t border-gray-200">
-                                                <button
-                                                    onClick={handleEnroll}
-                                                    disabled={enrolling}
-                                                    className="btn-primary inline-block text-center cursor-pointer disabled:opacity-75 disabled:cursor-wait"
-                                                >
-                                                    {enrolling ? 'Enrolling...' : 'Enroll to Join'}
-                                                </button>
-                                            </div>
-                                        ) : null}
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -257,20 +247,7 @@ export default function CourseDetailsPage() {
                         </section>
                     )}
 
-                    {/* Enrollment CTA */}
-                    {!isEnrolled && (
-                        <section className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 text-center mt-12 mb-12">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
-                            <p className="text-gray-700 mb-6">Enroll now to access live sessions and course materials</p>
-                            <button
-                                onClick={handleEnroll}
-                                disabled={enrolling}
-                                className="btn-primary inline-block cursor-pointer disabled:opacity-75 disabled:cursor-wait"
-                            >
-                                {enrolling ? 'Enrolling...' : 'Enroll in This Course'}
-                            </button>
-                        </section>
-                    )}
+
                 </div>
             </main>
             <Footer />
