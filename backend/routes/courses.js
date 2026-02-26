@@ -133,10 +133,10 @@ router.put('/:id', auth, roleCheck('Admin'), upload.single('image'), async (req,
 });
 
 // Enroll in a course (Student only)
-router.post('/:id/enroll', auth, roleCheck('student'), async (req, res) => {
+router.post('/:id/enroll', auth, async (req, res) => {
     try {
         const courseId = req.params.id;
-        const studentId = req.user.userId;
+        const studentEmail = req.user.email; // Use email for reliable lookup
 
         // Verify course exists
         const course = await Course.findById(courseId);
@@ -144,11 +144,11 @@ router.post('/:id/enroll', auth, roleCheck('student'), async (req, res) => {
             return res.status(404).json({ error: 'Course not found' });
         }
 
-        // Get the student
+        // Get the student by email
         const Student = require('../models/Student');
-        const student = await Student.findById(studentId);
+        const student = await Student.findOne({ email: studentEmail });
         if (!student) {
-            return res.status(404).json({ error: 'Student not found' });
+            return res.status(404).json({ error: 'Student record not found. Please ensure you are logged in as a student.' });
         }
 
         // Check if already enrolled
@@ -157,16 +157,18 @@ router.post('/:id/enroll', auth, roleCheck('student'), async (req, res) => {
         );
 
         if (isEnrolled) {
-            return res.status(400).json({ error: 'Already enrolled in this course' });
+            return res.status(400).json({ error: 'You are already enrolled in this course.' });
         }
 
-        // Add to enrollments with Auto-approval logic per requirements (flag = 'Y')
+        // Add enrollment with flag = 'Y' (auto-approved)
         student.enrolledCourses.push({
             courseId: courseId,
             flag: 'Y'
         });
 
         await student.save();
+
+        console.log(`✅ Student ${studentEmail} enrolled in course ${courseId}`);
 
         res.status(200).json({
             message: 'Successfully enrolled in course',
