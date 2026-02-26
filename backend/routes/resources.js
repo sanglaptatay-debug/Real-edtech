@@ -3,33 +3,6 @@ const router = express.Router();
 const Resource = require('../models/Resource');
 const auth = require('../middleware/auth');
 const roleCheck = require('../middleware/roleCheck');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-
-// Multer setup for resource file uploads
-const uploadDir = path.join(__dirname, '../uploads/resources');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-        const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, unique + path.extname(file.originalname));
-    }
-});
-const upload = multer({
-    storage,
-    limits: { fileSize: 20 * 1024 * 1024 }, // 20 MB limit
-    fileFilter: (req, file, cb) => {
-        // Allow common document types
-        const allowed = ['.pdf', '.ppt', '.pptx', '.doc', '.docx', '.xls', '.xlsx', '.txt', '.png', '.jpg', '.jpeg', '.zip'];
-        const ext = path.extname(file.originalname).toLowerCase();
-        if (allowed.includes(ext)) cb(null, true);
-        else cb(new Error('File type not allowed'));
-    }
-});
-
 
 // Get all resources for a course (requires authentication)
 router.get('/course/:courseId', auth, async (req, res) => {
@@ -37,8 +10,7 @@ router.get('/course/:courseId', auth, async (req, res) => {
         const { courseId } = req.params;
 
         // Allow admins to access all resources
-        if (req.user.role !== 'Admin') {
-            // Check if student is enrolled in this course with flag = 'Y'
+        if (req.user.role.toLowerCase() !== 'admin') {
             const enrolledCourses = req.user.enrolledCourses || [];
             const isEnrolled = enrolledCourses.some(enrollment => {
                 if (typeof enrollment === 'string') return enrollment === courseId;
@@ -70,54 +42,19 @@ router.post('/', auth, roleCheck('Admin'), async (req, res) => {
         const { courseId, resourceName, resourceUrl } = req.body;
 
         if (!courseId || !resourceName || !resourceUrl) {
-            return res.status(400).json({ error: 'courseId, resourceName, and resourceUrl are required' });
+            return res.status(400).json({ error: 'All fields are required' });
         }
 
-        const resource = new Resource({
-            courseId,
-            resourceName,
-            resourceType: 'url',
-            resourceUrl
-        });
-
+        const resource = new Resource({ courseId, resourceName, resourceUrl });
         await resource.save();
-        const populatedResource = await Resource.findById(resource._id).populate('courseId', 'title category');
+
+        const populatedResource = await Resource.findById(resource._id)
+            .populate('courseId', 'title category');
 
         res.status(201).json({ message: 'Resource created successfully', resource: populatedResource });
     } catch (error) {
         console.error('Error creating resource:', error);
         res.status(500).json({ error: 'Server error while creating resource' });
-    }
-});
-
-// Upload file resource (Admin only)
-router.post('/upload', auth, roleCheck('Admin'), upload.single('file'), async (req, res) => {
-    try {
-        const { courseId, resourceName } = req.body;
-
-        if (!courseId || !resourceName) {
-            return res.status(400).json({ error: 'courseId and resourceName are required' });
-        }
-        if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded' });
-        }
-
-        const filePath = `/uploads/resources/${req.file.filename}`;
-
-        const resource = new Resource({
-            courseId,
-            resourceName,
-            resourceType: 'file',
-            filePath
-        });
-
-        await resource.save();
-        const populatedResource = await Resource.findById(resource._id).populate('courseId', 'title category');
-
-        res.status(201).json({ message: 'File uploaded and resource created', resource: populatedResource });
-    } catch (error) {
-        console.error('Error uploading file resource:', error);
-        res.status(500).json({ error: 'Server error while uploading resource file' });
     }
 });
 
@@ -136,10 +73,7 @@ router.put('/:id', auth, roleCheck('Admin'), async (req, res) => {
             return res.status(404).json({ error: 'Resource not found' });
         }
 
-        res.json({
-            message: 'Resource updated successfully',
-            resource
-        });
+        res.json({ message: 'Resource updated successfully', resource });
     } catch (error) {
         console.error('Error updating resource:', error);
         res.status(500).json({ error: 'Server error while updating resource' });
