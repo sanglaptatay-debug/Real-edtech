@@ -7,18 +7,26 @@ const roleCheck = require('../middleware/roleCheck');
 // Get all resources for a course (requires authentication)
 router.get('/course/:courseId', auth, async (req, res) => {
     try {
-        // Check if user is enrolled in the course or is an admin
-        const isEnrolled = req.user.enrolledCourses.some(
-            courseId => courseId.toString() === req.params.courseId
-        );
+        const { courseId } = req.params;
 
-        if (!isEnrolled && req.user.role !== 'Admin') {
-            return res.status(403).json({
-                error: 'Access denied. You must be enrolled in this course to view resources.'
+        // Allow admins to access all resources
+        if (req.user.role !== 'Admin') {
+            // Check if student is enrolled in this course with flag = 'Y'
+            const enrolledCourses = req.user.enrolledCourses || [];
+            const isEnrolled = enrolledCourses.some(enrollment => {
+                if (typeof enrollment === 'string') return enrollment === courseId;
+                const id = enrollment.courseId?._id || enrollment.courseId;
+                return id?.toString() === courseId && enrollment.flag === 'Y';
             });
+
+            if (!isEnrolled) {
+                return res.status(403).json({
+                    error: 'Access denied. You must be enrolled in this course to view resources.'
+                });
+            }
         }
 
-        const resources = await Resource.find({ courseId: req.params.courseId })
+        const resources = await Resource.find({ courseId })
             .populate('courseId', 'title category')
             .sort({ createdAt: -1 });
 
