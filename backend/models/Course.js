@@ -19,7 +19,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         default: '' // URL to the course image
     },
-
+    isPromoted: {
+        type: Boolean,
+        default: false
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

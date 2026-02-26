@@ -61,7 +61,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', auth, roleCheck('Admin'), upload.single('image'), async (req, res) => {
     try {
         // req.body fields will be available here
-        const { title, summary, category, googleFormLink } = req.body;
+        const { title, summary, category, googleFormLink, isPromoted } = req.body;
 
         if (!title || !summary || !category) {
             return res.status(400).json({ error: 'Title, summary, and category are required' });
@@ -72,6 +72,7 @@ router.post('/', auth, roleCheck('Admin'), upload.single('image'), async (req, r
             summary,
             category,
             googleFormLink: googleFormLink || '',
+            isPromoted: isPromoted === true || isPromoted === 'true',
             createdBy: req.user.userId
         };
 
@@ -99,13 +100,14 @@ router.post('/', auth, roleCheck('Admin'), upload.single('image'), async (req, r
 // Update course (Admin only)
 router.put('/:id', auth, roleCheck('Admin'), upload.single('image'), async (req, res) => {
     try {
-        const { title, summary, category, googleFormLink } = req.body;
+        const { title, summary, category, googleFormLink, isPromoted } = req.body;
 
         const updateData = {};
         if (title) updateData.title = title;
         if (summary) updateData.summary = summary;
         if (category) updateData.category = category;
         if (googleFormLink !== undefined) updateData.googleFormLink = googleFormLink;
+        if (isPromoted !== undefined) updateData.isPromoted = isPromoted === true || isPromoted === 'true';
 
         if (req.file) {
             const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;

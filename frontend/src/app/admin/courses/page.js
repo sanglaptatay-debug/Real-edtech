@@ -14,11 +14,11 @@ export default function AdminCoursesPage() {
     const [editingCourse, setEditingCourse] = useState(null);
     const [uploading, setUploading] = useState(false);
 
-    // Form state
     const [formData, setFormData] = useState({
         title: '',
         summary: '',
         category: 'AI',
+        isPromoted: false
     });
     const [imageFile, setImageFile] = useState(null);
 
@@ -49,6 +49,7 @@ export default function AdminCoursesPage() {
             title: '',
             summary: '',
             category: 'AI',
+            isPromoted: false
         });
         setImageFile(null);
         setShowModal(true);
@@ -60,6 +61,7 @@ export default function AdminCoursesPage() {
             title: course.title,
             summary: course.summary,
             category: course.category,
+            isPromoted: course.isPromoted || false
         });
         setImageFile(null);
         setShowModal(true);
@@ -86,6 +88,7 @@ export default function AdminCoursesPage() {
             data.append('title', formData.title);
             data.append('summary', formData.summary);
             data.append('category', formData.category);
+            data.append('isPromoted', formData.isPromoted);
             if (imageFile) {
                 data.append('image', imageFile);
             }
@@ -160,9 +163,16 @@ export default function AdminCoursesPage() {
                                         )}
                                         <div className="flex-1">
                                             <div className="flex justify-between items-start mb-2">
-                                                <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                                                    {course.category}
-                                                </span>
+                                                <div className="flex gap-2">
+                                                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                                                        {course.category}
+                                                    </span>
+                                                    {course.isPromoted && (
+                                                        <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded flex items-center gap-1">
+                                                            ⭐ Promoted
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
                                             <h3 className="text-xl font-bold text-gray-900 mb-2">
                                                 {course.title}
@@ -283,6 +293,24 @@ export default function AdminCoursesPage() {
                                 {editingCourse && editingCourse.image && !imageFile && (
                                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Current image: {editingCourse.image.split('/').pop()}</p>
                                 )}
+                            </div>
+
+                            <div className="flex items-center gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-100 dark:border-yellow-900/50">
+                                <input
+                                    type="checkbox"
+                                    id="isPromoted"
+                                    checked={formData.isPromoted}
+                                    onChange={(e) => setFormData({ ...formData, isPromoted: e.target.checked })}
+                                    className="w-5 h-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer"
+                                />
+                                <div>
+                                    <label htmlFor="isPromoted" className="font-medium text-gray-900 dark:text-white cursor-pointer">
+                                        ⭐ Promote to Homepage
+                                    </label>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        Show this course on the homepage. (Up to 3 recommended).
+                                    </p>
+                                </div>
                             </div>
 
 

@@ -95,9 +95,9 @@ export default function Home() {
                                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent"></div>
                                 <p className="mt-4 text-gray-600 dark:text-gray-400">Loading courses...</p>
                             </div>
-                        ) : courses.length > 0 ? (
+                        ) : courses.filter(c => c.isPromoted).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {courses.map((course) => (
+                                {courses.filter(c => c.isPromoted).slice(0, 3).map((course) => (
                                     <CourseTile
                                         key={course._id}
                                         course={course}
