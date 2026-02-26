@@ -171,6 +171,7 @@ export default function AdminStudentsPage() {
                                             <tr className="bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm uppercase tracking-wider">
                                                 <th className="px-6 py-4 font-semibold">Name</th>
                                                 <th className="px-6 py-4 font-semibold">Email</th>
+                                                <th className="px-6 py-4 font-semibold">Enrolled Courses</th>
                                                 <th className="px-6 py-4 font-semibold">Joined Date</th>
                                                 <th className="px-6 py-4 font-semibold text-right">Actions</th>
                                             </tr>
@@ -187,6 +188,25 @@ export default function AdminStudentsPage() {
                                                         </div>
                                                     </td>
                                                     <td className="px-6 py-4 text-gray-600 dark:text-gray-300">{student.email}</td>
+                                                    <td className="px-6 py-4">
+                                                        {student.enrolledCourses && student.enrolledCourses.length > 0 ? (
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {student.enrolledCourses.map((enrollment, idx) => (
+                                                                    <span
+                                                                        key={idx}
+                                                                        className="inline-block bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 text-xs font-semibold px-2.5 py-1 rounded-full"
+                                                                    >
+                                                                        {enrollment.courseId?.title || 'Unknown'}
+                                                                        {enrollment.flag === 'Y' && (
+                                                                            <span className="ml-1 text-green-600">✓</span>
+                                                                        )}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        ) : (
+                                                            <span className="text-gray-400 text-sm italic">None</span>
+                                                        )}
+                                                    </td>
                                                     <td className="px-6 py-4 text-gray-500 dark:text-gray-400">
                                                         {new Date(student.createdAt).toLocaleDateString()}
                                                     </td>

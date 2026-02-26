@@ -7,7 +7,10 @@ const roleCheck = require('../middleware/roleCheck');
 // Get all students (Admin only)
 router.get('/', auth, roleCheck('Admin'), async (req, res) => {
     try {
-        const students = await Student.find().select('-password').sort({ createdAt: -1 });
+        const students = await Student.find()
+            .select('-password')
+            .populate('enrolledCourses.courseId', 'title')
+            .sort({ createdAt: -1 });
         res.json(students);
     } catch (error) {
         console.error('Error fetching students:', error);
