@@ -70,9 +70,9 @@ export default function Home() {
                             Live, technical skill based learning in AI, Drone Technology, 3D Printing, Bio Technology and other areas
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-                            <a href="#courses" className="btn-primary bg-white text-primary-600 hover:bg-gray-100 border border-transparent">
+                            <Link href="/courses" className="btn-primary bg-white text-primary-600 hover:bg-gray-100 border border-transparent">
                                 Explore Courses
-                            </a>
+                            </Link>
                             <a href="/about" className="btn-secondary border-white text-white hover:bg-white hover:text-primary-600">
                                 Learn More
                             </a>
