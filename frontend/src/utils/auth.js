@@ -44,7 +44,18 @@ export const isAdmin = () => {
 export const isEnrolledInCourse = (courseId) => {
     const user = getUser();
     if (!user || !user.enrolledCourses) return false;
-    return user.enrolledCourses.includes(courseId);
+
+    // Check if user is enrolled in this course AND has flag === 'Y'
+    return user.enrolledCourses.some(enrollment => {
+        // Handle migration states where enrolledCourses could be an array of strings/ObjectIds
+        if (typeof enrollment === 'string') {
+            return enrollment === courseId;
+        }
+
+        // Handle new standard where enrolledCourses is an array of objects
+        const idToCheck = enrollment.courseId?._id || enrollment.courseId;
+        return idToCheck === courseId && enrollment.flag === 'Y';
+    });
 };
 
 // ── Inactivity timer helpers ──────────────────────────────────────────────────

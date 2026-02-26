@@ -37,6 +37,7 @@ export const authAPI = {
 export const coursesAPI = {
     getAll: () => api.get('/courses'),
     getById: (id) => api.get(`/courses/${id}`),
+    enroll: (id) => api.post(`/courses/${id}/enroll`),
     create: (formData) => api.post('/courses', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     }),

@@ -19,7 +19,6 @@ export default function AdminCoursesPage() {
         title: '',
         summary: '',
         category: 'AI',
-        googleFormLink: '',
     });
     const [imageFile, setImageFile] = useState(null);
 
@@ -50,7 +49,6 @@ export default function AdminCoursesPage() {
             title: '',
             summary: '',
             category: 'AI',
-            googleFormLink: '',
         });
         setImageFile(null);
         setShowModal(true);
@@ -62,7 +60,6 @@ export default function AdminCoursesPage() {
             title: course.title,
             summary: course.summary,
             category: course.category,
-            googleFormLink: course.googleFormLink || '',
         });
         setImageFile(null);
         setShowModal(true);
@@ -89,7 +86,6 @@ export default function AdminCoursesPage() {
             data.append('title', formData.title);
             data.append('summary', formData.summary);
             data.append('category', formData.category);
-            data.append('googleFormLink', formData.googleFormLink);
             if (imageFile) {
                 data.append('image', imageFile);
             }
@@ -289,18 +285,7 @@ export default function AdminCoursesPage() {
                                 )}
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Google Form Link (Registration)
-                                </label>
-                                <input
-                                    type="url"
-                                    value={formData.googleFormLink}
-                                    onChange={(e) => setFormData({ ...formData, googleFormLink: e.target.value })}
-                                    placeholder="https://docs.google.com/forms/..."
-                                    className="input-field"
-                                />
-                            </div>
+
 
                             <div className="flex gap-3 pt-4">
                                 <button

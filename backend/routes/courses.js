@@ -132,6 +132,53 @@ router.put('/:id', auth, roleCheck('Admin'), upload.single('image'), async (req,
     }
 });
 
+// Enroll in a course (Student only)
+router.post('/:id/enroll', auth, roleCheck('student'), async (req, res) => {
+    try {
+        const courseId = req.params.id;
+        const studentId = req.user.userId;
+
+        // Verify course exists
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ error: 'Course not found' });
+        }
+
+        // Get the student
+        const Student = require('../models/Student');
+        const student = await Student.findById(studentId);
+        if (!student) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        // Check if already enrolled
+        const isEnrolled = student.enrolledCourses.some(
+            enrollment => enrollment.courseId && enrollment.courseId.toString() === courseId
+        );
+
+        if (isEnrolled) {
+            return res.status(400).json({ error: 'Already enrolled in this course' });
+        }
+
+        // Add to enrollments with Auto-approval logic per requirements (flag = 'Y')
+        student.enrolledCourses.push({
+            courseId: courseId,
+            flag: 'Y'
+        });
+
+        await student.save();
+
+        res.status(200).json({
+            message: 'Successfully enrolled in course',
+            enrolledCourses: student.enrolledCourses
+        });
+
+    } catch (error) {
+        console.error('Error enrolling in course:', error);
+        res.status(500).json({ error: 'Server error while enrolling in course' });
+    }
+});
+
 // Delete course (Admin only)
 router.delete('/:id', auth, roleCheck('Admin'), async (req, res) => {
     try {

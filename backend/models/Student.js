@@ -21,8 +21,15 @@ const StudentSchema = new mongoose.Schema({
         minlength: 6
     },
     enrolledCourses: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course'
+        courseId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Course'
+        },
+        flag: {
+            type: String,
+            default: 'Y', // Auto-approved upon enrollment per requirements
+            enum: ['Y', 'Pending', 'N']
+        }
     }],
     createdAt: {
         type: Date,
