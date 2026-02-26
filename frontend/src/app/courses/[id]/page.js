@@ -103,7 +103,17 @@ export default function CourseDetailsPage() {
                                         {course.category}
                                     </span>
                                     <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">{course.title}</h1>
-                                    <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed">{course.summary}</p>
+                                    <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed mb-8">{course.summary}</p>
+                                    {!isEnrolled && course.googleFormLink && (
+                                        <a
+                                            href={course.googleFormLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1"
+                                        >
+                                            Enroll Now to Join Live Sessions
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -114,7 +124,17 @@ export default function CourseDetailsPage() {
                                     {course.category}
                                 </span>
                                 <h1 className="text-5xl font-bold mb-4">{course.title}</h1>
-                                <p className="text-xl text-blue-100">{course.summary}</p>
+                                <p className="text-xl text-blue-100 mb-8">{course.summary}</p>
+                                {!isEnrolled && course.googleFormLink && (
+                                    <a
+                                        href={course.googleFormLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block bg-white text-primary-600 font-bold px-8 py-4 rounded-full shadow-xl hover:bg-gray-50 transition-all transform hover:-translate-y-1"
+                                    >
+                                        Enroll Now to Join Live Sessions
+                                    </a>
+                                )}
                             </div>
                         </div>
                     )}
@@ -146,7 +166,7 @@ export default function CourseDetailsPage() {
                                                 </p>
                                             </div>
                                         </div>
-                                        {isEnrolled && session.gmeetLink && (
+                                        {isEnrolled && session.gmeetLink ? (
                                             <div className="mt-4 pt-4 border-t border-gray-200">
                                                 <button
                                                     onClick={() => router.push(`/courses/${params.id}/live-session/${session._id}`)}
@@ -155,7 +175,18 @@ export default function CourseDetailsPage() {
                                                     Join Live Session
                                                 </button>
                                             </div>
-                                        )}
+                                        ) : !isEnrolled && course.googleFormLink ? (
+                                            <div className="mt-4 pt-4 border-t border-gray-200">
+                                                <a
+                                                    href={course.googleFormLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="btn-primary inline-block text-center"
+                                                >
+                                                    Enroll to Join
+                                                </a>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 ))}
                             </div>
