@@ -21,6 +21,15 @@ const resourcesAPI = {
             headers: { Authorization: `Bearer ${token}` }
         });
     },
+    uploadFile: async (formData) => {
+        const token = localStorage.getItem('token');
+        return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/resources/upload`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
     update: async (id, data) => {
         const token = localStorage.getItem('token');
         return axios.put(`${process.env.NEXT_PUBLIC_API_URL}/resources/${id}`, data, {
@@ -44,6 +53,8 @@ export default function AdminResourcesPage() {
     const [showModal, setShowModal] = useState(false);
     const [editingResource, setEditingResource] = useState(null);
     const [saving, setSaving] = useState(false);
+    const [uploadType, setUploadType] = useState('url'); // 'url' or 'file'
+    const [uploadFile, setUploadFile] = useState(null);
 
     // Form state
     const [formData, setFormData] = useState({
@@ -98,10 +109,9 @@ export default function AdminResourcesPage() {
             return;
         }
         setEditingResource(null);
-        setFormData({
-            resourceName: '',
-            resourceUrl: ''
-        });
+        setUploadType('url');
+        setUploadFile(null);
+        setFormData({ resourceName: '', resourceUrl: '' });
         setShowModal(true);
     };
 
@@ -124,15 +134,25 @@ export default function AdminResourcesPage() {
         setSaving(true);
 
         try {
-            const payload = {
-                courseId: selectedCourse,
-                ...formData
-            };
-
             if (editingResource) {
-                await resourcesAPI.update(editingResource._id, payload);
+                await resourcesAPI.update(editingResource._id, {
+                    courseId: selectedCourse,
+                    resourceName: formData.resourceName,
+                    resourceUrl: formData.resourceUrl
+                });
+            } else if (uploadType === 'file') {
+                if (!uploadFile) return alert('Please select a file to upload.');
+                const fd = new FormData();
+                fd.append('courseId', selectedCourse);
+                fd.append('resourceName', formData.resourceName);
+                fd.append('file', uploadFile);
+                await resourcesAPI.uploadFile(fd);
             } else {
-                await resourcesAPI.create(payload);
+                await resourcesAPI.create({
+                    courseId: selectedCourse,
+                    resourceName: formData.resourceName,
+                    resourceUrl: formData.resourceUrl
+                });
             }
 
             fetchResources(selectedCourse);
@@ -222,7 +242,11 @@ export default function AdminResourcesPage() {
                                                     {resource.resourceName}
                                                 </h3>
                                                 <a
-                                                    href={resource.resourceUrl}
+                                                    href={
+                                                        resource.resourceType === 'file'
+                                                            ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${resource.filePath}`
+                                                            : resource.resourceUrl
+                                                    }
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-sm text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1"
@@ -305,20 +329,85 @@ export default function AdminResourcesPage() {
                                 />
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Resource URL (Link/Drive) *
-                                </label>
-                                <input
-                                    type="url"
-                                    value={formData.resourceUrl}
-                                    onChange={(e) => setFormData({ ...formData, resourceUrl: e.target.value })}
-                                    placeholder="https://drive.google.com/..."
-                                    className="input-field w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                    required
-                                />
-                                <p className="text-xs text-gray-500 mt-1">Direct link to the file or resource.</p>
-                            </div>
+                            {/* Upload Type Toggle — only show when creating (not editing) */}
+                            {!editingResource && (
+                                <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 gap-1 mb-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => setUploadType('url')}
+                                        className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${uploadType === 'url'
+                                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                                            }`}
+                                    >
+                                        🔗 Link / URL
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setUploadType('file')}
+                                        className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${uploadType === 'file'
+                                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                                            }`}
+                                    >
+                                        📁 Upload File
+                                    </button>
+                                </div>
+                            )}
+
+                            {/* URL Input */}
+                            {(editingResource || uploadType === 'url') && (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Resource URL (Link/Drive) *
+                                    </label>
+                                    <input
+                                        type="url"
+                                        value={formData.resourceUrl}
+                                        onChange={(e) => setFormData({ ...formData, resourceUrl: e.target.value })}
+                                        placeholder="https://drive.google.com/..."
+                                        className="input-field w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        required={uploadType === 'url'}
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">Direct link to a Google Drive file, PDF, video, etc.</p>
+                                </div>
+                            )}
+
+                            {/* File Picker */}
+                            {!editingResource && uploadType === 'file' && (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Upload File *
+                                    </label>
+                                    <div className={`border-2 border-dashed rounded-lg p-5 text-center cursor-pointer transition-colors ${uploadFile ? 'border-teal-400 bg-teal-50 dark:bg-teal-900/20' : 'border-gray-300 dark:border-gray-600 hover:border-teal-400'
+                                        }`}>
+                                        <input
+                                            type="file"
+                                            id="resourceFile"
+                                            accept=".pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.txt,.png,.jpg,.jpeg,.zip"
+                                            onChange={(e) => setUploadFile(e.target.files[0])}
+                                            className="hidden"
+                                            required
+                                        />
+                                        <label htmlFor="resourceFile" className="cursor-pointer">
+                                            {uploadFile ? (
+                                                <div>
+                                                    <p className="text-teal-700 dark:text-teal-300 font-medium">📄 {uploadFile.name}</p>
+                                                    <p className="text-xs text-gray-500 mt-1">{(uploadFile.size / 1024).toFixed(1)} KB — Click to change</p>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <svg className="w-10 h-10 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                                    </svg>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">Click to browse files</p>
+                                                    <p className="text-xs text-gray-400 mt-1">PDF, PPT, DOC, XLS, TXT, ZIP, Images (max 20 MB)</p>
+                                                </div>
+                                            )}
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-700 mt-6">
                                 <button

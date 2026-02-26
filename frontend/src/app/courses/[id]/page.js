@@ -224,7 +224,11 @@ export default function CourseDetailsPage() {
                                     {resources.map((resource) => (
                                         <a
                                             key={resource._id}
-                                            href={resource.resourceUrl}
+                                            href={
+                                                resource.resourceType === 'file'
+                                                    ? `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${resource.filePath}`
+                                                    : resource.resourceUrl
+                                            }
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="block card hover:shadow-lg transition-shadow"

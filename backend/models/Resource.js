@@ -11,10 +11,19 @@ const resourceSchema = new mongoose.Schema({
         required: [true, 'Resource name is required'],
         trim: true
     },
+    resourceType: {
+        type: String,
+        enum: ['url', 'file'],
+        default: 'url'
+    },
     resourceUrl: {
         type: String,
-        required: [true, 'Resource URL is required'],
-        trim: true
+        trim: true,
+        default: ''
+    },
+    filePath: {
+        type: String,
+        default: '' // Path to uploaded file on server
     }
 }, {
     timestamps: true
