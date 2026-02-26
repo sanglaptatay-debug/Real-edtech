@@ -64,6 +64,9 @@ export default function Navbar() {
                         <Link href="/about" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">About</Link>
                         <Link href="/projects" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Projects</Link>
                         <Link href="/gallery" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Gallery</Link>
+                        {mounted && user && !isAdmin() && (
+                            <Link href="/my-courses" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold">My Courses</Link>
+                        )}
                     </div>
 
                     {/* Right Side: Theme Toggle & Auth */}
@@ -164,6 +167,9 @@ export default function Navbar() {
                         <Link href="/about" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">About</Link>
                         <Link href="/projects" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Projects</Link>
                         <Link href="/gallery" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Gallery</Link>
+                        {user && !isAdmin() && (
+                            <Link href="/my-courses" className="block py-2 text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700">🎓 My Courses</Link>
+                        )}
                         {user ? (
                             <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
                                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
