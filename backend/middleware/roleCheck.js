@@ -4,7 +4,10 @@ const roleCheck = (requiredRole) => {
             return res.status(401).json({ error: 'Authentication required' });
         }
 
-        if (req.user.role !== requiredRole) {
+        const userRole = (req.user.role || '').toLowerCase();
+        const required = requiredRole.toLowerCase();
+
+        if (userRole !== required) {
             return res.status(403).json({
                 error: 'Access denied. Insufficient permissions.',
                 requiredRole: requiredRole,

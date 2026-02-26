@@ -93,7 +93,7 @@ router.post('/login', async (req, res) => {
         if (!user) {
             user = await User.findOne({ email });
             if (user) {
-                role = user.role || 'admin';
+                role = user.role || 'Admin'; // ensure consistent casing
             }
         }
 
