@@ -58,9 +58,15 @@ export default function AdminSessionsPage() {
 
     const openEditModal = (session) => {
         setEditingSession(session);
+
+        // Convert the backend's ISO UTC string back to a local string format (YYYY-MM-DDThh:mm)
+        const dateObj = new Date(session.scheduledTime);
+        const tzOffset = dateObj.getTimezoneOffset() * 60000;
+        const localISOTime = new Date(dateObj.getTime() - tzOffset).toISOString().slice(0, 16);
+
         setFormData({
             sessionTitle: session.sessionTitle,
-            scheduledTime: new Date(session.scheduledTime).toISOString().slice(0, 16),
+            scheduledTime: localISOTime,
             gmeetLink: session.gmeetLink,
             courseId: session.courseId?._id || session.courseId
         });
@@ -76,10 +82,16 @@ export default function AdminSessionsPage() {
         e.preventDefault();
 
         try {
+            // Convert to a proper ISO string ensuring the local time entered is stored as UTC
+            const payload = {
+                ...formData,
+                scheduledTime: new Date(formData.scheduledTime).toISOString()
+            };
+
             if (editingSession) {
-                await liveSessionsAPI.update(editingSession._id, formData);
+                await liveSessionsAPI.update(editingSession._id, payload);
             } else {
-                await liveSessionsAPI.create(formData);
+                await liveSessionsAPI.create(payload);
             }
 
             fetchData();
