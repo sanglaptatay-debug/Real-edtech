@@ -63,6 +63,7 @@ export default function Navbar() {
                         <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Home</Link>
                         <Link href="/about" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">About</Link>
                         <Link href="/projects" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Projects</Link>
+                        <Link href="/courses" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Courses</Link>
                         <Link href="/gallery" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">Gallery</Link>
                         {mounted && user && !isAdmin() && (
                             <Link href="/my-courses" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold">My Courses</Link>
@@ -166,6 +167,7 @@ export default function Navbar() {
                         <Link href="/" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Home</Link>
                         <Link href="/about" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">About</Link>
                         <Link href="/projects" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Projects</Link>
+                        <Link href="/courses" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Courses</Link>
                         <Link href="/gallery" className="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600">Gallery</Link>
                         {user && !isAdmin() && (
                             <Link href="/my-courses" className="block py-2 text-primary-600 dark:text-primary-400 font-semibold hover:text-primary-700">🎓 My Courses</Link>
